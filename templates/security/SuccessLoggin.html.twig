@@ -1,0 +1,6 @@
+{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+    <p>Username: {{ app.user.username }}</p>
+{% endif %}
+<form method="get" action="/logout">
+    <button type="submit">Logout</button>
+</form>

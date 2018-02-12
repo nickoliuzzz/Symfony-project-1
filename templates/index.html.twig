@@ -1,0 +1,10 @@
+{% extends "base.html.twig" %}
+{% block body %}
+        <div class="container-fluid">
+            <ul class="list-group">
+                    {% for user in users %}
+                        <li class="list-group-item list-group-item-action">{{ user.username }} : {{ user.email }}</li>
+                    {% endfor %}
+                </ul>
+        </div>
+{% endblock %}

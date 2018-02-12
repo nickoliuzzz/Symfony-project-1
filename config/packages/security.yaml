@@ -1,0 +1,31 @@
+security:
+    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    providers:
+        our_db_provider:
+            entity:
+                class: App\Entity\User
+                property: username
+    encoders:
+        App\Entity\User:
+            algorithm: bcrypt
+
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        main:
+            anonymous: ~
+            provider: our_db_provider
+            form_login:
+                login_path: login
+                check_path: login
+                always_use_default_target_path: false
+                default_target_path: /user/logg
+            logout:
+                path:   /logout
+                target: /
+
+            # https://symfony.com/doc/current/security/form_login_setup.html
+    access_control:
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin, roles: ROLE_ADMIN }
