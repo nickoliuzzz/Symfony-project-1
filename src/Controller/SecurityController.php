@@ -2,12 +2,10 @@
 
 namespace App\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 use App\Form\UserType;
 use App\Entity\User;
@@ -40,7 +38,7 @@ class SecurityController extends Controller
             // ... do any other work - like sending them an email, etc
             // maybe set a "flash" success message for the user
 
-            return $this->redirectToRoute('user_registration');
+            return $this->redirectToRoute('homepage');
         }
 
         return $this->render(
@@ -84,5 +82,18 @@ class SecurityController extends Controller
             array('form' => $form->createView())
         );
     }
-
+    /**
+     * @Route("/user_delete", name="user_delete"):void
+     */
+    public function user_delete_Action(Request $request)
+    {
+        //$user_id= array( $request->query->get("id"));
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository(User::class);
+        foreach ($request->query->get("id") as $id){
+           $em->remove($user->find($id));
+        }
+        $em->flush();
+        return $this->redirectToRoute("homepage");
+    }
 }

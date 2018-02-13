@@ -49,6 +49,14 @@ class User implements UserInterface
 
     // other properties and methods
 
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
     public function getEmail()
     {
         return $this->email;

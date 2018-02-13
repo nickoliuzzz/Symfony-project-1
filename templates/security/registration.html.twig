@@ -1,15 +1,21 @@
-
 {% extends "base.html.twig" %}
 
+{% block title %}
+    Registration
+{% endblock %}
 {% block body %}
+    <span class="rounded-top">
+        <div class="p-5"></div>
+    <div class="mx-auto" style="width:200px">
     {{ form_errors(form) }}
-    {{ form_start(form) }}
-    {{ form_row(form.username) }}
-    {{ form_row(form.email) }}
-    {{ form_row(form.plainPassword.first) }}
-    {{ form_row(form.plainPassword.second) }}
-
-    <button type="submit">Register!</button>
-    {{ form_end(form) }}
+        {{ form_start(form) }}
+        {{ form_row(form.username) }}
+        {{ form_row(form.email) }}
+        {{ form_row(form.plainPassword.first) }}
+        {{ form_row(form.plainPassword.second) }}
+        <button type="submit" class="btn btn-outline-success">Register!</button>
+        {{ form_end(form) }}
+        </div>
+        </span>
 {% endblock %}
 

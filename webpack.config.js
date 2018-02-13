@@ -11,8 +11,9 @@ Encore
     .enableVersioning(Encore.isProduction())
 
     // uncomment to define the assets of the project
-    .addEntry('logo', './assets/images/logo.png')
+    .addEntry('logo', ['./assets/images/logo.png','./assets/images/pis.jpg'])
     //addStyleEntry('styles', './assets/app.scss')
+    //.createSharedEntry('pis','./assets/images/pis.jpg')
 
     // uncomment if you use Sass/SCSS files
     //.enableSassLoader()
