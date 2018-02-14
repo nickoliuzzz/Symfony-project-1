@@ -15,18 +15,23 @@ class Answer
      */
     private $id;
 
-    // ...
+    /**
+     * @return integer
+     */
+    public function getId():integer
+    {
+        return $this->id;
+    }
+
+
+
+
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Question")
      * @ORM\JoinColumn(name="question_id", referencedColumnName="id")
      */
     private $question;
-
-    /**
-     * @ORM\Column(type="string")
-     */
-    private $text;
 
     /**
      * @return mixed
@@ -44,20 +49,31 @@ class Answer
         $this->question = $question;
     }
 
+
+
+
     /**
-     * @return mixed
+     * @ORM\Column(type="string")
      */
-    public function getText()
+    private $text;
+
+
+    /**
+     * @return string
+     */
+    public function getText():string
     {
         return $this->text;
     }
 
     /**
-     * @param mixed $text
+     * @param string $text
      */
     public function setText($text): void
     {
         $this->text = $text;
     }
+
+
     // add your own fields
 }

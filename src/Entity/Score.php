@@ -87,4 +87,31 @@ class Score
     }
 
 
+
+
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $numberOfCorrectAnswers;
+
+    /**
+     * @return integer
+     */
+    public function getNumberOfCorrectAnswers():integer
+    {
+        return $this->numberOfCorrectAnswers;
+    }
+
+    /**
+     * @param integer $numberOfCorrectAnswers
+     */
+    public function setNumberOfCorrectAnswers(integer $numberOfCorrectAnswers): void
+    {
+        $this->numberOfCorrectAnswers = $numberOfCorrectAnswers;
+    }
+
+
+
+
 }

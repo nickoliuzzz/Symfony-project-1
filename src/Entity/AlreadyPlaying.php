@@ -67,9 +67,6 @@ class AlreadyPlaying
      * @ORM\JoinColumn(name="quiz_id", referencedColumnName="id")
      */
 
-
-
-
     private $quiz;
 
     /**
@@ -87,5 +84,57 @@ class AlreadyPlaying
     {
         $this->quiz = $quiz;
     }
+
+
+
+
+
+
+    /**
+    * @ORM\Column(type="integer")
+    */
+    private $numberOfCorrectAnswers;
+
+    /**
+     * @return integer
+     */
+    public function getNumberOfCorrectAnswers():integer
+    {
+        return $this->numberOfCorrectAnswers;
+    }
+
+    /**
+     * @param integer $numberOfCorrectAnswers
+     */
+    public function setNumberOfCorrectAnswers(integer $numberOfCorrectAnswers): void
+    {
+        $this->numberOfCorrectAnswers = $numberOfCorrectAnswers;
+    }
+
+
+
+
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $numberOfAnswers;
+
+    /**
+     * @return integer
+     */
+    public function getNumberOfAnswers():integer
+    {
+        return $this->numberOfAnswers;
+    }
+
+    /**
+     * @param integer $numberOfAnswers
+     */
+    public function setNumberOfAnswers(integer $numberOfAnswers): void
+    {
+        $this->numberOfAnswers = $numberOfAnswers;
+    }
+
 
 }

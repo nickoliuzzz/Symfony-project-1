@@ -46,7 +46,7 @@ class Quiz
     private $questions;
 
     /**
-     * @return string
+     * @return mixed
      */
     public function getQuestions()
     {
@@ -54,7 +54,7 @@ class Quiz
     }
 
     /**
-     * @param string $questions
+     * @param mixed $questions
      */
     public function setQuestions($questions): void
     {
@@ -106,6 +106,9 @@ class Quiz
     {
         $this->questions=$question;
     }
+
+
+
 
     public function removeScore(Score $score): void
     {
