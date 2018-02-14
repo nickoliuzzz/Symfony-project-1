@@ -23,6 +23,21 @@ class Question
      */
     private $answers;
 
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Quiz")
+     * @ORM\JoinColumn(name="quiz_id", referencedColumnName="id")
+     */
+    private $quiz;
+
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $text;
+
+
+
     public function __construct() {
         $this->answers = new ArrayCollection();
     }
@@ -31,10 +46,8 @@ class Question
     {
         $this->answers=$answer;
     }
-    /**
-     * @ORM\Column(type="string")
-     */
-    private $text;
+
+
 
     /**
      * @return mixed
@@ -42,14 +55,6 @@ class Question
     public function getAnswers()
     {
         return $this->answers;
-    }
-
-    /**
-     * @param mixed $answers
-     */
-    public function setAnswers($answers): void
-    {
-        $this->answers = $answers;
     }
 
     /**
@@ -61,11 +66,36 @@ class Question
     }
 
     /**
+     * @return mixed
+     */
+    public function getQuiz()
+    {
+        return $this->quiz;
+    }
+
+
+
+    /**
+     * @param mixed $answers
+     */
+    public function setAnswers($answers): void
+    {
+        $this->answers = $answers;
+    }
+
+    /**
      * @param mixed $text
      */
     public function setText($text): void
     {
         $this->text = $text;
     }
-    // add your own fields
+
+    /**
+     * @param mixed $quiz
+     */
+    public function setQuiz($quiz): void
+    {
+        $this->quiz = $quiz;
+    }
 }
