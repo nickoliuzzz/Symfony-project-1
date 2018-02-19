@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class IndexController extends Controller
 {
@@ -21,21 +22,21 @@ class IndexController extends Controller
         return $this->render("index.html.twig",array('users'=>$users->findAll()));
         $em;
     }
-
     /**
-     * @Route("/email",name="email")
+     * @Route("/login",name="login")
      */
-    public function emailPage(Request $request,\Swift_Mailer $mailer)
+    public function userLogin(Request $request, AuthenticationUtils $authUtils)
     {
-        $message = (new \Swift_Message('Hello Email'))
-            ->setFrom('itrasymfony@gmail.com')
-            ->setTo('iviknick@gmail.com')
-            ->setBody(
-                $this->renderView("base.html.twig"
-                ),
-                'text/html'
-            );
-        $mailer->send($message);
-        return new Response("htllo");
+        // get the login error if there is one
+        $error = $authUtils->getLastAuthenticationError();
+
+        // last username entered by the user
+        $lastUsername = $authUtils->getLastUsername();
+
+        return $this->render('security/login.html.twig', array(
+            'last_username' => $lastUsername,
+            'error'         => $error,
+        ));
     }
+
 }

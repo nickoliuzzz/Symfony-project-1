@@ -41,6 +41,20 @@ class User implements UserInterface
 
     private $email;
 
+    /**
+     * @ORM\Column(type="array")
+     */
+    private $isActive=array("IS_AUTHENTICATED_ANONYMOUSLY");
+
+    /**
+     * @return mixed
+     */
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
     public function getEmail()
     {
         return $this->email;
@@ -154,9 +168,17 @@ class User implements UserInterface
     public function getRoles()
     {
         // TODO: Implement getRoles() method.
-        return array('ROLE_USER');
-
+        return $this->isActive;
     }
+
+    /**
+     * @param mixed $isActive
+     */
+    public function setRoles($isActive): void
+    {
+        $this->isActive = $isActive;
+    }
+
     public function eraseCredentials()
     {
         // TODO: Implement eraseCredentials() method.
