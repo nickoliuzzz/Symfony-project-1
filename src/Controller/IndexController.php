@@ -20,6 +20,7 @@ class IndexController extends Controller
         $em = $this->getDoctrine()->getManager();
         $users = $em->getRepository(User::class);
         return $this->render("index.html.twig",array('users'=>$users->findAll()));
+        $em;
     }
     /**
      * @Route("/login",name="login")
