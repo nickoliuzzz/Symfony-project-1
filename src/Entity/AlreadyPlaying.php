@@ -63,7 +63,7 @@ class AlreadyPlaying
 
     /**
      * One AlreadyPlaying has One Quiz.
-     * @ORM\OneToOne(targetEntity="app\Entity\Quiz")
+     * @ORM\OneToOne(targetEntity="App\Entity\Quiz")
      * @ORM\JoinColumn(name="quiz_id", referencedColumnName="id")
      */
 
