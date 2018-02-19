@@ -1,10 +1,12 @@
 <?php
+
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use App\Entity\AlreadyPlaying;
 
 /**
  * @ORM\Entity
@@ -29,31 +31,17 @@ class User implements UserInterface
         return $this->id;
     }
 
-
-
-
-
     /**
      * @ORM\Column(type="string", length=255, unique=true)
      * @Assert\NotBlank()
      * @Assert\Email()
      */
-
     private $email;
 
     /**
      * @ORM\Column(type="array")
      */
-    private $isActive=array("IS_AUTHENTICATED_ANONYMOUSLY");
-
-    /**
-     * @return mixed
-     */
-
-    public function getId()
-    {
-        return $this->id;
-    }
+    private $isActive = array("IS_AUTHENTICATED_ANONYMOUSLY");
 
     public function getEmail()
     {
@@ -64,9 +52,6 @@ class User implements UserInterface
     {
         $this->email = $email;
     }
-
-
-
 
     /**
      * @ORM\Column(type="string", length=255, unique=true)
@@ -83,8 +68,6 @@ class User implements UserInterface
     {
         $this->username = $username;
     }
-
-
 
     /**
      * @Assert\NotBlank()
@@ -103,9 +86,6 @@ class User implements UserInterface
         $this->plainPassword = $password;
     }
 
-
-
-
     /**
      * The below length depends on the "algorithm" you use for encoding
      * the password, but this works well with bcrypt.
@@ -123,10 +103,6 @@ class User implements UserInterface
     {
         $this->password = $password;
     }
-
-
-
-
 
     /**
      * One Product has Many Features.
@@ -154,16 +130,15 @@ class User implements UserInterface
 
     public function addAlreadyplaings($alreadyplaing): void
     {
-        $this->alreadyplaings->add($alreadyplaing);
+        // The bcrypt and argon2i algorithms don't require a separate salt.
+        // You *may* need a real salt if you choose a different encoder.
+        return;
     }
 
     public function removeAlreadyplaings(AlreadyPlaying $alreadyplaing): void
     {
         $this->alreadyplaings->removeElement($alreadyplaing);
     }
-
-
-
 
     public function getRoles()
     {
@@ -184,19 +159,17 @@ class User implements UserInterface
         // TODO: Implement eraseCredentials() method.
     }
 
+    // other methods, including security methods like getRoles()
 
+    /**
+     * Returns the salt that was originally used to encode the password.
+     *
+     * This can return null if the password was not encoded using a salt.
+     *
+     * @return string|null The salt
+     */
     public function getSalt()
     {
-        // The bcrypt and argon2i algorithms don't require a separate salt.
-        // You *may* need a real salt if you choose a different encoder.
-        return null;
+        // TODO: Implement getSalt() method.
     }
-
-
-
-
-
-
-
-    // other methods, including security methods like getRoles()
 }
