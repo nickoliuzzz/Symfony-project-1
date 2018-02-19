@@ -140,12 +140,12 @@ class User implements UserInterface
 
     public function addAlreadyplaings($alreadyplaing): void
     {
-        $this->alreadyplaings = $alreadyplaing;
+        $this->alreadyplaings->add($alreadyplaing);
     }
 
-    public function removeAlreadyplaings($alreadyplaing): void
+    public function removeAlreadyplaings(AlreadyPlaying $alreadyplaing): void
     {
-        $this->alreadyplaings->remove($alreadyplaing);
+        $this->alreadyplaings->removeElement($alreadyplaing);
     }
 
 

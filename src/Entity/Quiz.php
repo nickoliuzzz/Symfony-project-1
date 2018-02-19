@@ -4,12 +4,17 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\JoinTable;
+use Doctrine\ORM\Mapping\ManyToMany;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\QuizRepository")
  */
 class Quiz
 {
+
+
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -40,8 +45,8 @@ class Quiz
 
 
     /**
-     * One Product has Many Features.
-     * @ORM\OneToMany(targetEntity="App\Entity\Question", mappedBy="quiz")
+     * @ManyToMany(targetEntity="Question", inversedBy="quizzes")
+     * @JoinTable(name="question_groups")
      */
     private $questions;
 
@@ -89,6 +94,9 @@ class Quiz
     {
         $this->scores = $scores;
     }
+
+
+
 
 
 

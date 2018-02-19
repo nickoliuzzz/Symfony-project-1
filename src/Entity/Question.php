@@ -4,12 +4,26 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\ManyToMany;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\QuestionRepository")
  */
 class Question
 {
+
+
+
+
+
+    public function __construct() {
+        $this->answers = new ArrayCollection();
+        $this->quizzes = new ArrayCollection();
+    }
+
+
+
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -18,62 +32,37 @@ class Question
     private $id;
 
     /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+
+
+
+
+    /**
      * One Product has Many Features.
      * @ORM\OneToMany(targetEntity="App\Entity\Answer", mappedBy="question")
      */
-    private $answers;
+    protected $answers;
 
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Quiz")
-     * @ORM\JoinColumn(name="quiz_id", referencedColumnName="id")
-     */
-    private $quiz;
-
-
-    /**
-     * @ORM\Column(type="string")
-     */
-    private $text;
-
-
-
-    public function __construct() {
-        $this->answers = new ArrayCollection();
-    }
 
     public function addAnswer(Answer $answer): void
     {
-        $this->answers=$answer;
+        $this->answers->add($answer);
     }
-
-
 
     /**
      * @return mixed
      */
     public function getAnswers()
     {
+
         return $this->answers;
     }
-
-    /**
-     * @return mixed
-     */
-    public function getText()
-    {
-        return $this->text;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getQuiz()
-    {
-        return $this->quiz;
-    }
-
-
 
     /**
      * @param mixed $answers
@@ -83,6 +72,66 @@ class Question
         $this->answers = $answers;
     }
 
+
+
+
+
+
+    /**
+     * Many Groups have Many Users.
+     * @ManyToMany(targetEntity="Quiz", mappedBy="questions")
+     */
+    protected $quizzes;
+
+    public function addQuiz(Quiz $quiz) : void
+    {
+        $this->quizzes->add($quiz);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getQuizzes()
+    {
+        return $this->quizzes;
+    }
+
+
+    /**
+     * @param mixed $quizzes
+     */
+    public function setQuizzes($quizzes): void
+    {
+        $this->quizzes = $quizzes;
+    }
+
+
+
+
+
+
+
+
+
+
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $text;
+
+    /**
+     * @return mixed
+     */
+    public function getText()
+    {
+        return $this->text;
+    }
+
+
+
+
+
     /**
      * @param mixed $text
      */
@@ -91,11 +140,29 @@ class Question
         $this->text = $text;
     }
 
+
     /**
-     * @param mixed $quiz
+     * @ORM\Column(type="boolean")
      */
-    public function setQuiz($quiz): void
+    private $isActive;
+
+    /**
+     * @return boolean
+     */
+    public function getisActive():bool
     {
-        $this->quiz = $quiz;
+        return $this->isActive;
     }
+
+
+
+    /**
+     * @param boolean $isActive
+     */
+    public function setIsActive(bool $isActive): void
+    {
+        $this->isActive = $isActive;
+    }
+
+
 }
