@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class IndexController extends Controller
 {
@@ -20,41 +21,21 @@ class IndexController extends Controller
         $users = $em->getRepository(User::class);
         return $this->render("index.html.twig",array('users'=>$users->findAll()));
     }
+    /**
+     * @Route("/login",name="login")
+     */
+    public function userLogin(Request $request, AuthenticationUtils $authUtils)
+    {
+        // get the login error if there is one
+        $error = $authUtils->getLastAuthenticationError();
 
-    /**
-     * @Route("/email",name="email")
-     */
-    public function emailPage(Request $request,\Swift_Mailer $mailer)
-    {
-        $message = (new \Swift_Message('Hello Email'))
-            ->setFrom('itrasymfony@gmail.com')
-            ->setTo('iviknick@gmail.com')
-            ->setBody(
-                $this->renderView("base.html.twig"
-                ),
-                'text/html'
-            );
-        $mailer->send($message);
-        return new Response("hello");
-    }
-    /**
-     * @Route("/addquiz",name="addquiz")
-     */
-    public function addquiz(Request $request)
-    {
-        return $this->render("quiz/addquiz.html.twig");
-    }
-    /**
-     * @Route("/user/{id}",name="user_del")
-     */
-    public function user_del(Request $request,$id)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $users = $em->getRepository(User::class);
-        //var_dump($users);
-        //$em= $this->getDoctrine()->getRepository(User::class);
+        // last username entered by the user
+        $lastUsername = $authUtils->getLastUsername();
 
-        return $this->render("security/user_del.html.twig",array('users'=>$users->findBy(['id'=>$id])));
+        return $this->render('security/login.html.twig', array(
+            'last_username' => $lastUsername,
+            'error'         => $error,
+        ));
     }
 
 }
