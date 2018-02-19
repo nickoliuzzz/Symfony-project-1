@@ -32,7 +32,6 @@ class SecurityController extends Controller
 
             // 4) save the User!
             $em = $this->getDoctrine()->getManager();
-
             $em->persist($user);
             $em->flush();
             // ... do any other work - like sending them an email, etc

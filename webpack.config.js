@@ -11,15 +11,17 @@ Encore
     .enableVersioning(Encore.isProduction())
 
     // uncomment to define the assets of the project
-    .addEntry('logo', ['./assets/images/logo.png','./assets/images/pis.jpg'])
-    //addStyleEntry('styles', './assets/app.scss')
-    //.createSharedEntry('pis','./assets/images/pis.jpg')
+    .addEntry('addquiz', './assets/js/addquiz.js')
+    .addEntry('auth_js', './assets/js/auth_script.js')
+    .addStyleEntry('addquizstyle', './assets/css/addquiz.css')
+    .addStyleEntry('auth_style', './assets/css/auth_form.css')
+    .createSharedEntry('logo','./assets/images/logo.png')
 
     // uncomment if you use Sass/SCSS files
     //.enableSassLoader()
 
     // uncomment for legacy applications that require $/jQuery as a global variable
-    //.autoProvidejQuery()
+    .autoProvidejQuery()
 ;
 
 module.exports = Encore.getWebpackConfig();

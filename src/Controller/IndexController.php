@@ -35,6 +35,26 @@ class IndexController extends Controller
                 'text/html'
             );
         $mailer->send($message);
-        return new Response("htllo");
+        return new Response("hello");
     }
+    /**
+     * @Route("/addquiz",name="addquiz")
+     */
+    public function addquiz(Request $request)
+    {
+        return $this->render("quiz/addquiz.html.twig");
+    }
+    /**
+     * @Route("/user/{id}",name="user_del")
+     */
+    public function user_del(Request $request,$id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $users = $em->getRepository(User::class);
+        //var_dump($users);
+        //$em= $this->getDoctrine()->getRepository(User::class);
+
+        return $this->render("security/user_del.html.twig",array('users'=>$users->findBy(['id'=>$id])));
+    }
+
 }

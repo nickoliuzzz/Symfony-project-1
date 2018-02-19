@@ -3,18 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}Symfony homepage!{% endblock %}</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
     {% block stylesheets %}
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-              integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-              crossorigin="anonymous">
     {% endblock %}
 </head>
 <body>
-
 <div class="container-fliud">
     {% block navbar %}
         <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-            <a class="navbar-brand" href="{{ path('homepage') }}">
+            <a class="navbar-brand" href="{{ path("homepage")}}">
                 <img src="{{ asset('build/images/logo.png') }}" class="rounded" alt="Logo" style="width:40px;">
             </a>
             <ul class="navbar-nav">
@@ -22,7 +21,7 @@
                     <a class="nav-link" href="{{ path('register') }}">Register</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Link 2</a>
+                    <a class="nav-link" href="{{ path('user_del',{'id':1}) }}">Link 2</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Link 3</a>
@@ -31,15 +30,16 @@
         </nav>
     {% endblock navbar %}
 </div>
-
-<div class="container">
+<div class="container bg-light">
     {% block body %}
     {% endblock %}
 </div>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+<script   src="http://code.jquery.com/jquery-3.3.1.js"   integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="   crossorigin="anonymous"></script>
+
 {% block javascripts %}
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-            crossorigin="anonymous"></script>
 {% endblock %}
 </body>
 </html>
