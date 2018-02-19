@@ -1,0 +1,31 @@
+
+{% extends "base.html.twig" %}
+
+    {%  block  body %}
+    <form action="/" method="GET">
+        {% for question in   questions %}
+
+           <h3>{{ question.text }}</h3>   <input type="checkbox" id="subscribeNews" name=id[] value={{ question.id }}>
+
+
+            {% for answer in   question.answers  %}
+
+                   {{ answer.text }}
+
+            {% endfor %}
+
+        {% endfor %}
+
+    <button type="submit">Subscribe</button>
+    </form>
+        <form action="/" method="GET">
+            <h1>KKEKKKE</h1>
+            <button type="submit">KEKKKKEKE</button>
+        </form>
+
+
+    {% endblock %}
+
+
+
+
