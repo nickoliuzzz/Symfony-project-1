@@ -13,15 +13,11 @@ class Question
 {
 
 
-
-
-
-    public function __construct() {
+    public function __construct()
+    {
         $this->answers = new ArrayCollection();
         $this->quizzes = new ArrayCollection();
     }
-
-
 
 
     /**
@@ -38,9 +34,6 @@ class Question
     {
         return $this->id;
     }
-
-
-
 
 
     /**
@@ -73,17 +66,13 @@ class Question
     }
 
 
-
-
-
-
     /**
      * Many Groups have Many Users.
      * @ManyToMany(targetEntity="Quiz", mappedBy="questions")
      */
     protected $quizzes;
 
-    public function addQuiz(Quiz $quiz) : void
+    public function addQuiz(Quiz $quiz): void
     {
         $this->quizzes->add($quiz);
     }
@@ -106,15 +95,6 @@ class Question
     }
 
 
-
-
-
-
-
-
-
-
-
     /**
      * @ORM\Column(type="string")
      */
@@ -127,9 +107,6 @@ class Question
     {
         return $this->text;
     }
-
-
-
 
 
     /**
@@ -149,11 +126,10 @@ class Question
     /**
      * @return boolean
      */
-    public function getisActive():bool
+    public function getisActive(): bool
     {
         return $this->isActive;
     }
-
 
 
     /**

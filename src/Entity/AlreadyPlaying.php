@@ -35,8 +35,6 @@ class AlreadyPlaying
     }
 
 
-
-
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
@@ -58,7 +56,6 @@ class AlreadyPlaying
     {
         $this->user = $user;
     }
-
 
 
     /**
@@ -86,19 +83,15 @@ class AlreadyPlaying
     }
 
 
-
-
-
-
     /**
-    * @ORM\Column(type="integer")
-    */
+     * @ORM\Column(type="integer")
+     */
     private $numberOfCorrectAnswers;
 
     /**
      * @return integer
      */
-    public function getNumberOfCorrectAnswers():integer
+    public function getNumberOfCorrectAnswers(): integer
     {
         return $this->numberOfCorrectAnswers;
     }
@@ -112,9 +105,6 @@ class AlreadyPlaying
     }
 
 
-
-
-
     /**
      * @ORM\Column(type="integer")
      */
@@ -123,7 +113,7 @@ class AlreadyPlaying
     /**
      * @return integer
      */
-    public function getNumberOfAnswers():integer
+    public function getNumberOfAnswers(): integer
     {
         return $this->numberOfAnswers;
     }

@@ -14,7 +14,6 @@ class Quiz
 {
 
 
-
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -39,11 +38,6 @@ class Quiz
     }
 
 
-
-
-
-
-
     /**
      * @ManyToMany(targetEntity="Question", inversedBy="quizzes")
      * @JoinTable(name="question_groups")
@@ -65,10 +59,6 @@ class Quiz
     {
         $this->questions = $questions;
     }
-
-
-
-
 
 
     /**
@@ -96,26 +86,21 @@ class Quiz
     }
 
 
-
-
-
-
-    public function __construct() {
+    public function __construct()
+    {
         $this->scores = new ArrayCollection();
         $this->questions = new ArrayCollection();
     }
 
     public function addScore(Score $score): void
     {
-        $this->scores=$score;
+        $this->scores = $score;
     }
 
     public function addQuestion(Question $question): void
     {
-        $this->questions=$question;
+        $this->questions = $question;
     }
-
-
 
 
     public function removeScore(Score $score): void
@@ -127,14 +112,6 @@ class Quiz
     {
         $this->questions->remove($question);
     }
-
-
-
-
-
-
-
-
 
 
     // add your own fields
