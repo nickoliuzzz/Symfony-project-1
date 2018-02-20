@@ -6,7 +6,7 @@ var $collectionHolder;
 // setup an "add a answer" link
 var $addAnswerLink = $('<a href="#" class="add_answer_link" style="color:#5eff44;" >➕</a>');
 
-var $newLinkLi = $('<li>Вопрос</li>').append($addAnswerLink);
+var $newLinkLi = $('<li class="list-group-item">Вопрос</li>').append($addAnswerLink);
 
 
 jQuery(document).ready(function() {
@@ -33,7 +33,7 @@ jQuery(document).ready(function() {
 
 
 function addAnswerFormDeleteLink($answerFormLi) {
-    var $removeFormA = $('<a href="#" style="color:red;">x</a>');
+    var $removeFormA = $('<button type="button" class="btn btn-outline-danger btn-sm">Delete</button>');
 
     $answerFormLi.append($removeFormA);
 
@@ -59,7 +59,7 @@ function addAnswerForm($collectionHolder, $newLinkLi) {
     var index = $collectionHolder.data('index');
     console.log($collectionHolder.find(':input').length);
 
-    if($collectionHolder.find(':input').length < 8) {
+    if($collectionHolder.find(':input').length < 12) {
      //   window.alert(index);
         var newForm = prototype;
         // You need this only if you didn't set 'label' => false in your answers field in TaskType
@@ -75,7 +75,7 @@ function addAnswerForm($collectionHolder, $newLinkLi) {
         $collectionHolder.data('index', index + 1);
 
         // Display the form in the page in an li, before the "Add a answer" link li
-        var $newFormLi = $('<li></li>').append(newForm);
+        var $newFormLi = $('<li class="list-group-item"></li>').append(newForm);
         $newLinkLi.before($newFormLi);
         addAnswerFormDeleteLink($newFormLi);
     }
