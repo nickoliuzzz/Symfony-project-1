@@ -107,12 +107,13 @@ class Quiz
 
     public function addScore(Score $score): void
     {
-        $this->scores=$score;
+        $this->getScores()->add($score);
     }
 
     public function addQuestion(Question $question): void
     {
-        $this->questions=$question;
+        $this->getQuestions()->add($question);
+        $question->addQuiz($this);
     }
 
 

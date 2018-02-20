@@ -13,7 +13,6 @@ jQuery(document).ready(function() {
     // Get the ul that holds the collection of answers
     $collectionHolder = $('ul.answers');
 
-    // add the "add a answer" anchor and li to the answers ul
     $collectionHolder.append($newLinkLi);
 
 
@@ -35,6 +34,7 @@ jQuery(document).ready(function() {
 
 function addAnswerFormDeleteLink($answerFormLi) {
     var $removeFormA = $('<a href="#" style="color:red;">x</a>');
+
     $answerFormLi.append($removeFormA);
 
     $removeFormA.on('click', function(e) {
@@ -55,8 +55,11 @@ function addAnswerForm($collectionHolder, $newLinkLi) {
     var prototype = $collectionHolder.data('prototype');
 
     // get the new index
+   // var index = $collectionHolder.size();
     var index = $collectionHolder.data('index');
-    if(index < 4) {
+    console.log($collectionHolder.find(':input').length);
+
+    if($collectionHolder.find(':input').length < 8) {
      //   window.alert(index);
         var newForm = prototype;
         // You need this only if you didn't set 'label' => false in your answers field in TaskType
@@ -64,7 +67,7 @@ function addAnswerForm($collectionHolder, $newLinkLi) {
         // instead be a number based on how many items we have
         // newForm = newForm.replace(/__name__label__/g, index);
 
-        // Replace '__name__' in the prototype's HTML to
+        // Replace '__name__' in the prototype'  HTML to
         // instead be a number based on how many items we have
         newForm = newForm.replace(/__name__/g, index);
 
