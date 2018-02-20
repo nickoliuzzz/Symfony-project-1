@@ -6,14 +6,10 @@
 
                 <h3>{{ question.text }}</h3>
                 <input type="checkbox" id="subscribeNews" name="id[]" value={{ question.id }}>
-
-
                 {% for answer in   question.answers %}
 
                     {{ answer.text }}
-
                 {% endfor %}
-
             {% endfor %}
             <br>
             <button type="submit">Add</button>

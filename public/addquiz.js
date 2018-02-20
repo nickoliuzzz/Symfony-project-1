@@ -3,9 +3,9 @@
 var $collectionHolder;
 
 // setup an "add a answer" link
-var $addAnswerLink = $('<a href="#" class="add_answer_link" style="color:#5eff44;" >➕</a>');
+var $addAnswerLink = $('<button type="button" class="add_answer_link btn btn-success btn-sm">Add question</button>');
 
-var $newLinkLi = $('<li class="list-group-item">Вопрос</li>').append($addAnswerLink);
+var $newLinkLi = $('<li class="list-group-item"></li>').append($addAnswerLink);
 
 
 jQuery(document).ready(function() {
