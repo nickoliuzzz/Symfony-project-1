@@ -23,10 +23,12 @@ jQuery(document).ready(function() {
 
     $addAnswerLink.on('click', function(e) {
         // prevent the link from creating a "#" on the URL
-        e.preventDefault();
+        if($collectionHolder.find(':input').length < 8) {
+            e.preventDefault();
 
-        // add a new answer form (see next code block)
-        addAnswerForm($collectionHolder, $newLinkLi);
+            // add a new answer form (see next code block)
+            addAnswerForm($collectionHolder, $newLinkLi);
+        }
     });
 });
 
@@ -51,15 +53,17 @@ function addAnswerFormDeleteLink($answerFormLi) {
 
 
 function addAnswerForm($collectionHolder, $newLinkLi) {
+
+
+    if($collectionHolder.find(':input').length < 8) {
     // Get the data-prototype explained earlier
     var prototype = $collectionHolder.data('prototype');
 
     // get the new index
    // var index = $collectionHolder.size();
     var index = $collectionHolder.data('index');
-    console.log($collectionHolder.find(':input').length);
 
-    if($collectionHolder.find(':input').length < 8) {
+
      //   window.alert(index);
         var newForm = prototype;
         // You need this only if you didn't set 'label' => false in your answers field in TaskType
