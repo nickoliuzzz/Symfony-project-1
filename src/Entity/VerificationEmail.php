@@ -24,6 +24,11 @@ class VerificationEmail
     private $verificationString;
 
     /**
+     * @ORM\Column(type="boolean")
+     */
+    private $forgot=0;
+
+    /**
      * One Product has One Shipment.
      * @OneToOne(targetEntity="User")
      * @JoinColumn(name="user_id", referencedColumnName="id")
@@ -60,6 +65,22 @@ class VerificationEmail
     public function setVerificationString($verificationString): void
     {
         $this->verificationString = $verificationString;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getForgot()
+    {
+        return $this->forgot;
+    }
+
+    /**
+     * @param mixed $forgot
+     */
+    public function setForgot($forgot): void
+    {
+        $this->forgot = $forgot;
     }
 
     // add your own fields
