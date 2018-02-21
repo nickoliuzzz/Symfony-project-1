@@ -21,7 +21,7 @@ class AlreadyPlaying
     /**
      * @return integer
      */
-    public function getId(): integer
+    public function getId()
     {
         return $this->id;
     }
@@ -39,7 +39,7 @@ class AlreadyPlaying
      * @ORM\ManyToOne(targetEntity="App\Entity\User")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
-    private $user;
+    protected $user;
 
     /**
      * @return mixed
@@ -64,7 +64,7 @@ class AlreadyPlaying
      * @ORM\JoinColumn(name="quiz_id", referencedColumnName="id")
      */
 
-    private $quiz;
+    protected $quiz;
 
     /**
      * @return mixed
@@ -86,12 +86,12 @@ class AlreadyPlaying
     /**
      * @ORM\Column(type="integer")
      */
-    private $numberOfCorrectAnswers;
+    private $numberOfCorrectAnswers = 0;
 
     /**
      * @return integer
      */
-    public function getNumberOfCorrectAnswers(): integer
+    public function getNumberOfCorrectAnswers()
     {
         return $this->numberOfCorrectAnswers;
     }
@@ -99,7 +99,7 @@ class AlreadyPlaying
     /**
      * @param integer $numberOfCorrectAnswers
      */
-    public function setNumberOfCorrectAnswers(integer $numberOfCorrectAnswers): void
+    public function setNumberOfCorrectAnswers($numberOfCorrectAnswers): void
     {
         $this->numberOfCorrectAnswers = $numberOfCorrectAnswers;
     }
@@ -108,12 +108,12 @@ class AlreadyPlaying
     /**
      * @ORM\Column(type="integer")
      */
-    private $numberOfAnswers;
+    private $numberOfAnswers = 0;
 
     /**
      * @return integer
      */
-    public function getNumberOfAnswers(): integer
+    public function getNumberOfAnswers()
     {
         return $this->numberOfAnswers;
     }
@@ -121,7 +121,7 @@ class AlreadyPlaying
     /**
      * @param integer $numberOfAnswers
      */
-    public function setNumberOfAnswers(integer $numberOfAnswers): void
+    public function setNumberOfAnswers($numberOfAnswers): void
     {
         $this->numberOfAnswers = $numberOfAnswers;
     }

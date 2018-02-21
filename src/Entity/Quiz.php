@@ -48,7 +48,7 @@ class Quiz
      * @ManyToMany(targetEntity="Question", inversedBy="quizzes")
      * @JoinTable(name="question_groups")
      */
-    private $questions;
+    protected $questions;
 
     /**
      * @return mixed
@@ -75,7 +75,7 @@ class Quiz
      * One Product has Many Features.
      * @ORM\OneToMany(targetEntity="App\Entity\Score", mappedBy="Quiz")
      */
-    private $scores;
+    protected $scores;
 
 
     /**
@@ -129,6 +129,27 @@ class Quiz
         $this->questions->remove($question);
     }
 
+
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isActive;
+
+    /**
+     * @return boolean
+     */
+    public function getisActive():bool
+    {
+        return $this->isActive;
+    }
+    /**
+     * @param boolean $isActive
+     */
+    public function setIsActive(bool $isActive): void
+    {
+        $this->isActive = $isActive;
+    }
 
 
 

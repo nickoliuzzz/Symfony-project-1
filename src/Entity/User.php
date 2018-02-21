@@ -114,7 +114,7 @@ class User implements UserInterface
     /**
      * @return array
      */
-    public function getAlreadyplaings(): array
+    public function getAlreadyplaings()
     {
         return $this->alreadyplaings;
     }
