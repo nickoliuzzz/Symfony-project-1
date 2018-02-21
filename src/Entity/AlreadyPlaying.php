@@ -36,7 +36,7 @@ class AlreadyPlaying
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User" , inversedBy="alreadyplaings")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="alreadyplaings")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected $user;

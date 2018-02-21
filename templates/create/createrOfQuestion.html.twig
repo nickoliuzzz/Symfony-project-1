@@ -1,9 +1,7 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-    <script src="http://code.jquery.com/jquery-3.3.1.min.js"
-            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-
+    <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
     {{ form_start (form) }}
     {{ form_row (form.text) }}
     <ul class="answers list-group" data-prototype="{{ form_widget(form.answers.vars.prototype)|e('html_attr') }}">
@@ -11,12 +9,11 @@
             <li class="list-group-item"> {{ form_row( answer) }}</li>
         {% endfor %}
     </ul>
-
     {{ form_end( form ) }}
 {% endblock %}
 
 
 {% block javascripts %}
-    <script src="{{ asset('asset/js.js') }}"></script>
+    <script src="{{ asset('addquiz.js')}}"></script>
 {% endblock %}
 
