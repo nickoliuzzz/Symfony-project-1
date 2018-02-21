@@ -73,7 +73,7 @@ class Quiz
 
     /**
      * One Product has Many Features.
-     * @ORM\OneToMany(targetEntity="App\Entity\Score", mappedBy="Quiz")
+     * @ORM\OneToMany(targetEntity="App\Entity\Score", mappedBy="quiz")
      */
     protected $scores;
 

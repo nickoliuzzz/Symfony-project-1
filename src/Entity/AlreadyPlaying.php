@@ -36,7 +36,7 @@ class AlreadyPlaying
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User" , inversedBy="alreadyplaings")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected $user;
@@ -63,8 +63,8 @@ class AlreadyPlaying
      * @ORM\OneToOne(targetEntity="App\Entity\Quiz")
      * @ORM\JoinColumn(name="quiz_id", referencedColumnName="id")
      */
-
     protected $quiz;
+
 
     /**
      * @return mixed

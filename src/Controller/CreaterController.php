@@ -21,18 +21,11 @@ class CreaterController extends Controller
      *
      *
      */
-    public function index(Request $request,$parametres)
+    public function index(Request $request,int $parametres)
     {
         $question = new Question();
-
-
-
-
         $form = $this->createForm(QuestionType::class, $question);
         $form->handleRequest($request);
-
-
-
 
         if ($form->isSubmitted() && $form->isValid()) {
 
@@ -40,17 +33,14 @@ class CreaterController extends Controller
             $em->persist($question);
 
             $question->setIsActive(true);
-            foreach ($question->getAnswers() as $answer){
-
+            foreach ($question->getAnswers() as $answer)
+            {
                 $em->persist($answer);
                 $answer->setQuestion($question);
-
-
             }
 
 
             $em->flush();
-
             return $this->redirect('/show');
         }
 
