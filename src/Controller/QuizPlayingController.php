@@ -64,16 +64,18 @@ class QuizPlayingController extends Controller
 
 
     /**
-     * @Route("/quiz/answer/{id}",
-     *     requirements={"id"="\d+"})
+     * @Route("/quiz/answer")
      * @Security("has_role('ROLE_USER')")
      */
-    public function answerOnQuestion(Request $request,$id)
+    public function answerOnQuestion(Request $request)
     {
+
+        $id = (int) $request->request->get( "idOfQuiz");
         $response = $this->checkQuiz($id);
         if($response !== Null){
             return $response;
         }
+
 
         $em = $this->getDoctrine()->getManager();
         $quizManager = $em->getRepository(Quiz::class);
@@ -90,11 +92,8 @@ class QuizPlayingController extends Controller
         $isPlayed = false;
 
         foreach ($alreadyPlayeds as $alreadPlay){
-            var_dump($alreadPlay->getQuiz()->getId());
-            var_dump($id);
             if($alreadPlay->getQuiz()->getId() === $id  )
             {
-                var_dump("lel");
                 $alreadyPlayed = $alreadPlay;
                 $idAlreadyPlayed = $alreadPlay->getId();
                 $isPlayed = true;
@@ -116,7 +115,7 @@ class QuizPlayingController extends Controller
         }
         var_dump($numberOfQuestion);
         var_dump($countOfQuestions);
-        if($numberOfQuestion == $countOfQuestions)
+        if($numberOfQuestion + 1 == $countOfQuestions)
         {
             $score = new Score();
             $score->setNumberOfCorrectAnswers($correctAnswers);
@@ -135,7 +134,7 @@ class QuizPlayingController extends Controller
             $em->flush();
             //TODO return response
         }
-        //return $this->redirect('/quiz/playing/'.$id);
+        return $this->redirect('/quiz/playing/'.$id);
 
     }
 
