@@ -13,10 +13,8 @@ class UserRepository extends ServiceEntityRepository
         parent::__construct($registry, User::class);
     }
 
-    /**
-     * @param $value
-     * @return User[]
-     */
+
+    /*
     public function findAllGreaterThanPrice($value):array
     {
         return $this->createQueryBuilder('q')
@@ -26,6 +24,6 @@ class UserRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult()
         ;
-    }
+    }*/
 
 }
