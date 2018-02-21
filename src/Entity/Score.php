@@ -36,7 +36,7 @@ class Score
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Quiz")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Quiz" , inversedBy="scores")
      * @ORM\JoinColumn(name="quiz_id", referencedColumnName="id")
      */
     private $quiz;

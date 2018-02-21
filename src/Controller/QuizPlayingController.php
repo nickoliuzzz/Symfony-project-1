@@ -22,7 +22,7 @@ class QuizPlayingController extends Controller
     public function index(int $id)
     {
         $response = $this->checkQuiz($id);
-        if($response !== Null){
+        if ($response !== Null) {
             return $response;
         }
 
@@ -32,21 +32,19 @@ class QuizPlayingController extends Controller
         $activeUser = $this->get('security.token_storage')->getToken()->getUser();
 
 
-
         $isPlayed = false;
         $alreadyPlayed = new AlreadyPlaying();
         $alreadyPlayeds = $activeUser->getAlreadyplaings();
 
-        foreach ($alreadyPlayeds as $alreadPlay){
-            if($alreadPlay->getQuiz()->getId() === $id  )
-            {
+        foreach ($alreadyPlayeds as $alreadPlay) {
+            if ($alreadPlay->getQuiz()->getId() === $id) {
                 $isPlayed = true;
                 $alreadyPlayed = $alreadPlay;
                 break;
             }
         }
 
-        if($isPlayed === false){
+        if ($isPlayed === false) {
             $alreadyPlayed->setQuiz($quiz);
             $alreadyPlayed->setUser($activeUser);
         }
@@ -58,7 +56,7 @@ class QuizPlayingController extends Controller
         $question = $quiz->getQuestions()[$alreadyPlayed->getNumberOfAnswers()];
 
         return $this->render('quiz/OneQuestionOfQuiz.html.twig',
-            array('question'=> $question )
+            array('question' => $question)
         );
     }
 
@@ -70,9 +68,9 @@ class QuizPlayingController extends Controller
     public function answerOnQuestion(Request $request)
     {
 
-        $id = (int) $request->request->get( "idOfQuiz");
+        $id = (int)$request->request->get("idOfQuiz");
         $response = $this->checkQuiz($id);
-        if($response !== Null){
+        if ($response !== Null) {
             return $response;
         }
 
@@ -83,7 +81,7 @@ class QuizPlayingController extends Controller
         $activeUser = $this->get('security.token_storage')->getToken()->getUser();
         $questions = $quiz->getQuestions();
         $countOfQuestions = count($questions);
-        $idOfAnswer =(int) $request->request->get( "idOfAnswer");
+        $idOfAnswer = (int)$request->request->get("idOfAnswer");
 
 
         $alreadyPlayed = new AlreadyPlaying();
@@ -91,9 +89,8 @@ class QuizPlayingController extends Controller
         $idAlreadyPlayed = 0;
         $isPlayed = false;
 
-        foreach ($alreadyPlayeds as $alreadPlay){
-            if($alreadPlay->getQuiz()->getId() === $id  )
-            {
+        foreach ($alreadyPlayeds as $alreadPlay) {
+            if ($alreadPlay->getQuiz()->getId() === $id) {
                 $alreadyPlayed = $alreadPlay;
                 $idAlreadyPlayed = $alreadPlay->getId();
                 $isPlayed = true;
@@ -103,20 +100,18 @@ class QuizPlayingController extends Controller
 
         $correctAnswers = 0;
         $numberOfQuestion = 0;
-        if($isPlayed)
-        {
+        if ($isPlayed) {
             $numberOfQuestion = $alreadyPlayed->getNumberOfAnswers();
             $correctAnswers = $alreadyPlayed->getNumberOfCorrectAnswers();
         }
 
         $answer = $em->getRepository(Answer::class)->find($idOfAnswer);
-        if($answer->getisTrue()){
+        if ($answer->getisTrue()) {
             $correctAnswers++;
         }
         var_dump($numberOfQuestion);
         var_dump($countOfQuestions);
-        if($numberOfQuestion + 1 == $countOfQuestions)
-        {
+        if ($numberOfQuestion + 1 == $countOfQuestions) {
             $score = new Score();
             $score->setNumberOfCorrectAnswers($correctAnswers);
             $score->setUser($activeUser);
@@ -125,8 +120,7 @@ class QuizPlayingController extends Controller
             $em->persist($score);
             $em->flush();
             //TODO return response
-        }
-        else {
+        } else {
             $persistedAlreadyPlayed = $em->getRepository(AlreadyPlaying::class)->find($idAlreadyPlayed);
             $persistedAlreadyPlayed->setNumberOfAnswers($persistedAlreadyPlayed->getNumberOfAnswers() + 1);
             $persistedAlreadyPlayed->setNumberOfCorrectAnswers($correctAnswers);
@@ -134,12 +128,9 @@ class QuizPlayingController extends Controller
             $em->flush();
             //TODO return response
         }
-        return $this->redirect('/quiz/playing/'.$id);
+        return $this->redirect('/quiz/playing/' . $id);
 
     }
-
-
-
 
 
     public function checkQuiz(int $id)
@@ -148,14 +139,12 @@ class QuizPlayingController extends Controller
         $quizManager = $em->getRepository(Quiz::class);
         $quiz = $quizManager->find($id);
 
-        if($quiz === Null)
-        {
+        if ($quiz === Null) {
             //TODO return page that said that someone go to quiz that isn't exist
             return new Response("kek");
         }
 
-        if($quiz->getisActive() === false)
-        {
+        if ($quiz->getisActive() === false) {
             //TODO return page that said that someone go to deactivated quiz
             return new Response("kek");
         }
@@ -170,10 +159,8 @@ class QuizPlayingController extends Controller
         $isInArray = false;
         $numberInArray = 1;
 
-        foreach ($scoresOrderedBy as $scoress)
-        {
-            if($scoress->getUser() === $activeUser)
-            {
+        foreach ($scoresOrderedBy as $scoress) {
+            if ($scoress->getUser() === $activeUser) {
                 $isInArray = true;
                 $score = $scoress;
                 break;
@@ -181,7 +168,7 @@ class QuizPlayingController extends Controller
             $numberInArray++;
         }
 
-        if($isInArray){
+        if ($isInArray) {
             //TODO page that will show ur result
             $name = $activeUser->getUsername();
             $scorePoints = $score->getNumberOfCorrectAnswers();
@@ -190,9 +177,6 @@ class QuizPlayingController extends Controller
         }
         return null;
     }
-
-
-
 
 
 }
