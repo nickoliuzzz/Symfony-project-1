@@ -1,6 +1,7 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
+    <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
     {{ form_start (form) }}
     {{ form_row (form.text) }}
     <ul class="answers list-group" data-prototype="{{ form_widget(form.answers.vars.prototype)|e('html_attr') }}">

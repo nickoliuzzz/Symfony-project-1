@@ -14,6 +14,7 @@ class Quiz
 {
 
 
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -38,11 +39,16 @@ class Quiz
     }
 
 
+
+
+
+
+
     /**
      * @ManyToMany(targetEntity="Question", inversedBy="quizzes")
      * @JoinTable(name="question_groups")
      */
-    private $questions;
+    protected $questions;
 
     /**
      * @return mixed
@@ -61,11 +67,15 @@ class Quiz
     }
 
 
+
+
+
+
     /**
      * One Product has Many Features.
-     * @ORM\OneToMany(targetEntity="App\Entity\Score", mappedBy="Quiz")
+     * @ORM\OneToMany(targetEntity="App\Entity\Score", mappedBy="quiz")
      */
-    private $scores;
+    protected $scores;
 
 
     /**
@@ -86,21 +96,27 @@ class Quiz
     }
 
 
-    public function __construct()
-    {
+
+
+
+
+    public function __construct() {
         $this->scores = new ArrayCollection();
         $this->questions = new ArrayCollection();
     }
 
     public function addScore(Score $score): void
     {
-        $this->scores = $score;
+        $this->getScores()->add($score);
     }
 
     public function addQuestion(Question $question): void
     {
-        $this->questions = $question;
+        $this->getQuestions()->add($question);
+        $question->addQuiz($this);
     }
+
+
 
 
     public function removeScore(Score $score): void
@@ -112,6 +128,35 @@ class Quiz
     {
         $this->questions->remove($question);
     }
+
+
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isActive;
+
+    /**
+     * @return boolean
+     */
+    public function getisActive():bool
+    {
+        return $this->isActive;
+    }
+    /**
+     * @param boolean $isActive
+     */
+    public function setIsActive(bool $isActive): void
+    {
+        $this->isActive = $isActive;
+    }
+
+
+
+
+
+
+
 
 
     // add your own fields
