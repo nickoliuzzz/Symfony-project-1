@@ -35,11 +35,6 @@ class Score
     }
 
 
-
-
-
-
-
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Quiz")
      * @ORM\JoinColumn(name="quiz_id", referencedColumnName="id")
@@ -61,7 +56,6 @@ class Score
     {
         $this->quiz = $quiz;
     }
-
 
 
     /**
@@ -87,9 +81,6 @@ class Score
     }
 
 
-
-
-
     /**
      * @ORM\Column(type="integer")
      */
@@ -98,7 +89,7 @@ class Score
     /**
      * @return integer
      */
-    public function getNumberOfCorrectAnswers():integer
+    public function getNumberOfCorrectAnswers(): integer
     {
         return $this->numberOfCorrectAnswers;
     }
@@ -110,8 +101,6 @@ class Score
     {
         $this->numberOfCorrectAnswers = $numberOfCorrectAnswers;
     }
-
-
 
 
 }

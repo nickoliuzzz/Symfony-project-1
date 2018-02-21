@@ -128,6 +128,10 @@ class Question
         return $this->text;
     }
 
+
+
+
+
     /**
      * @param mixed $text
      */
@@ -137,7 +141,28 @@ class Question
     }
 
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isActive;
 
+    /**
+     * @return boolean
+     */
+    public function getisActive():bool
+    {
+        return $this->isActive;
+    }
+
+
+
+    /**
+     * @param boolean $isActive
+     */
+    public function setIsActive(bool $isActive): void
+    {
+        $this->isActive = $isActive;
+    }
 
 
 }

@@ -51,7 +51,7 @@ class CreaterController extends Controller
 
             $em->flush();
 
-            return $this->redirectToRoute('/show');
+            return $this->redirect('/show');
         }
 
         return $this->render(

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Entity;
+
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -18,13 +19,10 @@ class Answer
     /**
      * @return integer
      */
-    public function getId():integer
+    public function getId(): integer
     {
         return $this->id;
     }
-
-
-
 
 
     /**
@@ -50,8 +48,6 @@ class Answer
     }
 
 
-
-
     /**
      * @ORM\Column(type="string")
      */
@@ -73,8 +69,6 @@ class Answer
     {
         $this->text = $text;
     }
-
-
 
 
     /**
