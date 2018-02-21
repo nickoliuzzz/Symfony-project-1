@@ -1,24 +1,18 @@
-<script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+{% extends "base.html.twig" %}
 
-{%  block body %}
+{% block body %}
     {{ form_start (form) }}
-    <h1>Question:</h1><br>
-    {{  form_row (form.text) }}
-   <ul class="answers" data-prototype="{{ form_widget(form.answers.vars.prototype)|e('html_attr') }}">
+    {{ form_row (form.text) }}
+    <ul class="answers list-group" data-prototype="{{ form_widget(form.answers.vars.prototype)|e('html_attr') }}">
         {% for answer in form.answers %}
-        <li> {{ form_row( answer) }}</li>
+            <li class="list-group-item"> {{ form_row( answer) }}</li>
         {% endfor %}
     </ul>
-
     {{ form_end( form ) }}
 {% endblock %}
 
 
 {% block javascripts %}
-
-
-
-    <script src="{{ asset('asset/js.js') }}"></script>
-
+    <script src="{{ asset('addquiz.js')}}"></script>
 {% endblock %}
 
