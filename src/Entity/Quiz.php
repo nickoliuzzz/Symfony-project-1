@@ -103,6 +103,7 @@ class Quiz
     public function __construct() {
         $this->scores = new ArrayCollection();
         $this->questions = new ArrayCollection();
+        $this->isActive = true;
     }
 
     public function addScore(Score $score): void
