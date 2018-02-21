@@ -17,9 +17,9 @@ class Answer
     private $id;
 
     /**
-     * @return integer
+     * @return mixed
      */
-    public function getId(): integer
+    public function getId()
     {
         return $this->id;
     }

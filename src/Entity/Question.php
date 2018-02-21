@@ -12,10 +12,6 @@ use Doctrine\ORM\Mapping\ManyToMany;
 class Question
 {
 
-
-
-
-
     public function __construct() {
         $this->answers = new ArrayCollection();
         $this->quizzes = new ArrayCollection();

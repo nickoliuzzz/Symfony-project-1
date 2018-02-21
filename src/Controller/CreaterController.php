@@ -85,26 +85,15 @@ class CreaterController extends Controller
 
     public function addQuestions(Request $request)
     {
-
-
         $quiz = new Quiz();
-
-
-
         $em = $this->getDoctrine()->getManager();
         $questionManager = $em->getRepository(Question::class);
         foreach ($request->query->get( "id") as $id){
 
             $quiz->addQuestion($questionManager->find($id));
         }
-
-
-
-
-
         $em->persist($quiz);
         $em->flush();
-
         return $this->redirect('/show');
     }
 
