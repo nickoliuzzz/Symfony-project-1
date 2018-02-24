@@ -32,7 +32,6 @@ class CreaterController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($question);
 
-            $question->setIsActive(true);
             foreach ($question->getAnswers() as $answer)
             {
                 $em->persist($answer);

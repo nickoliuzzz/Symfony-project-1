@@ -1,0 +1,81 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<html>
+<head>
+    <meta charset='utf-8'>
+</head>
+<body>
+<script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+<button id="keks">Загрузить</button>
+<input type='text' name='searched' id='searched'>
+<div id="here_table"></div>
+<script type="text/javascript">
+    var arrayOfData = [];
+    var table = $('#here_table');
+    var  kek =1;
+    ajax();
+    $(document).ready(function() {
+        $('.cells').click(console.log("kek"));
+        $('#searched').keyup(ajax);
+
+        $('#keks').click(ajax);
+    });
+
+    function ajax() {
+
+        $.ajax({
+            url:"/kek",
+            method:"POST",
+            data:{"arrayOfdata":arrayOfData},
+            dataType:"json",
+            async:true,
+            success:function (data) {
+                document.clear();
+                console.log(data);
+
+
+                //table.append("");
+
+                table.append("<table>");
+                table.append("<tr>" );
+
+                //  var sem = data[0];
+
+
+                for(let cell of data[0]){
+                    table.append("<td type='button' class='cells'>" + cell + "</td>");
+                }
+
+
+                table.append("</tr>" );
+
+
+                data.shift();
+
+                for(let sem of data) {
+                    table.append("<tr>" );
+                    for (let elemen of sem) {
+
+                      //  console.log(elemen["content"]);
+                        var content = decodeURI(elemen["content"]);
+                        content.replace(new RegExp('["]'), " ");
+                        table.append("<td>" + content + "</dt>" );
+                    }
+                    table.append("</tr>" );
+                }
+                table.append("</table>");
+            },
+            error: function (response) {
+                console.log('aaa');
+                console.log(response);
+            }
+        });
+    }
+
+
+
+
+</script>
+</body>
+</html>
+{% endblock %}
