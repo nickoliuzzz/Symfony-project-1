@@ -20,37 +20,39 @@ use Symfony\Component\HttpFoundation\Response;
 class asd extends Controller
 {
     /**
-     * @Route("/kek")
+     * @Route("/ajax")
      */
     public function answerOnQuestion(Request $request)
     {
-        $idOfAnswer = (int)$request->request->get("arrayOfdata");
+
         $em = $this->getDoctrine()->getManager();
-        $questions = $em->getRepository(User::class)->findAll();
-        $quesion = null;
-        $que = null;
+        $repository = $em->getRepository(User::class);
+        $user = ["id","email","username"];
 
-        $quesion = ["id","email","username"];
+            $userJSON = [];
+            $userJSON[] = $user;
+            $array = $request->request->get("arrayOfData");
+            //TODO write findByArray (array , $user[0])
+            $users = $repository->findAll();
+            foreach ($users as $us) {
+                $user  = [];
+                $user[] = $this->json($us->getId());
+                $user[] = $this->json($us->getEmail());
+                $user[] = $this->json($us->getUsername());
+                $userJSON[] = $user;
+            }
+            return $this->json($userJSON);
 
-        $que[] = $quesion;
 
-        foreach ($questions as $question){
-            $quesion = [];
-            $quesion[] =  $this->json($question->getId());
-            $quesion[] =  $this->json($question->getEmail());
-            $quesion[] =  $this->json($question->getUsername());
-            $que[] = $quesion;
-        }
-
-        return $this->json($que);
+        return $this->render("ajaxTry.html.twig");
     }
 
     /**
-     * @Route("/kek1")
+     * @Route("/ajax1")
      */
     public function a1nswerOnQuestion(Request $request)
     {
-        return $this->render("create/kek.html.twig");
+        return $this->render("ajaxTry.html.twig");
     }
 
 

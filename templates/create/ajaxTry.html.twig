@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<html>
+<head>
+    <meta charset='utf-8'>
+</head>
+<body>
+<script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+{#<button id="keks">Загрузить</button>#}
+{#<input type='text' name='searched' id='searched'>#}
+<div id="here_table"></div>
+
+
+</body>
+</html>
+{% endblock %}
+
+
+{% block javascripts %}
+    <script src="{{ asset('plugin.js')}}"></script>
+{% endblock %}

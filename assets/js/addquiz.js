@@ -56,8 +56,6 @@ function addAnswerForm($collectionHolder, $newLinkLi) {
     // get the new index
     // var index = $collectionHolder.size();
     var index = $collectionHolder.data('index');
-    console.log($collectionHolder.find(':input').length);
-
     if($collectionHolder.find(':input').length < 12) {
         //   window.alert(index);
         var newForm = prototype;
