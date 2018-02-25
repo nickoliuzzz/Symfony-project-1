@@ -43,7 +43,6 @@ class QuizPlayingController extends Controller
                 break;
             }
         }
-
         if ($isPlayed === false) {
             $alreadyPlayed->setQuiz($quiz);
             $alreadyPlayed->setUser($activeUser);
@@ -141,7 +140,7 @@ class QuizPlayingController extends Controller
 
         if ($quiz === Null) {
             //TODO return page that said that someone go to quiz that isn't exist
-            return new Response("kek");
+            return new Response("ke5432k");
         }
 
         if ($quiz->getisActive() === false) {

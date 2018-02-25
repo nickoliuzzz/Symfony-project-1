@@ -13,16 +13,19 @@ class QuizRepository extends ServiceEntityRepository
         parent::__construct($registry, Quiz::class);
     }
 
-    /*
+
     public function findBySomething($value)
     {
         return $this->createQueryBuilder('q')
-            ->where('q.something = :value')->setParameter('value', $value)
-            ->orderBy('q.id', 'ASC')
-            ->setMaxResults(10)
+            ->setFirstResult($value)
+            ->setMaxResults(5)
             ->getQuery()
             ->getResult()
         ;
     }
-    */
+    public function getNumberofQuiz()
+    {
+        return count($this->findAll());
+    }
+
 }

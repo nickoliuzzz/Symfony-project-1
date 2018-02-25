@@ -14,7 +14,6 @@ class Quiz
 {
 
 
-
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -39,11 +38,6 @@ class Quiz
     }
 
 
-
-
-
-
-
     /**
      * @ManyToMany(targetEntity="Question", inversedBy="quizzes")
      * @JoinTable(name="question_groups")
@@ -65,10 +59,6 @@ class Quiz
     {
         $this->questions = $questions;
     }
-
-
-
-
 
 
     /**
@@ -96,11 +86,8 @@ class Quiz
     }
 
 
-
-
-
-
-    public function __construct() {
+    public function __construct()
+    {
         $this->scores = new ArrayCollection();
         $this->questions = new ArrayCollection();
         $this->isActive = true;
@@ -118,8 +105,6 @@ class Quiz
     }
 
 
-
-
     public function removeScore(Score $score): void
     {
         $this->scores->remove($score);
@@ -131,7 +116,6 @@ class Quiz
     }
 
 
-
     /**
      * @ORM\Column(type="boolean")
      */
@@ -140,10 +124,11 @@ class Quiz
     /**
      * @return boolean
      */
-    public function getisActive():bool
+    public function getisActive(): bool
     {
         return $this->isActive;
     }
+
     /**
      * @param boolean $isActive
      */
@@ -152,13 +137,26 @@ class Quiz
         $this->isActive = $isActive;
     }
 
+    /**
+     * @ORM\Column(type="string", unique=true)
+     */
+    private $name;
 
+    /**
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
 
-
-
-
-
-
+    /**
+     * @param mixed $name
+     */
+    public function setName($name): void
+    {
+        $this->name = $name;
+    }
 
     // add your own fields
 }
