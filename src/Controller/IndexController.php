@@ -72,16 +72,6 @@ class IndexController extends Controller
             'error'         => $error,
         ));
     }
-    /**
-     * @Route("/kek",name="kek")
-     */
-    public function kek(Request $request):void
-    {
-        $em= $this->getDoctrine()->getManager();
-        $users = $em->getRepository(User::class)->sortQuery(-1,'1',0);
-        var_dump($users);
-        return;
-    }
 
     /**
      * @Route("/ajax")
