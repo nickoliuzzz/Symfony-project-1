@@ -53,11 +53,14 @@ function ajax() {
 
 
             searched.keyup(function(e){
-                goToPage = 0;
-                temppage = 0;
-                stringFromSearched = $('#searched').val();
-                appendData();
-                ajax();
+                delay(function () {
+                    goToPage = 0;
+                    temppage = 0;
+                    stringFromSearched = $('#searched').val();
+                    appendData();
+                    ajax();
+                },350);
+
             });
             left.click(function(e){
                 goToPage = -1;
@@ -70,16 +73,24 @@ function ajax() {
                 ajax();
             });
 
+            var delay = (function(){
+                var timer = 0;
+                return function(callback, ms){
+                    clearTimeout (timer);
+                    timer = setTimeout(callback, ms);
+                };
+            })();
+
            table.append("<table class='table'>");
             $("table").append("<thead><tr>" );
 
             for(var cell of data[0]){
                 table.append();
-                $button = $("<td type='button' class='cells'>" + cell + "</td>");
+                $button = $("<th type='button' class='cells col-3'>" + cell + "</th>");
                 $button.on('click', sortButton);
-                table.append($button);
+                $("thead tr").append($button);
             }
-
+            $("thead tr").append("<th>Select</th>");
             $("table").append("<tbody>" );
             data.shift();
 
