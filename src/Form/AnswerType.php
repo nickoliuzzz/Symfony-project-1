@@ -18,7 +18,7 @@ class AnswerType extends AbstractType
         $builder
             ->add('text', TextType::class,array('label' => ' '))
             ->add('isTrue', RadioType::class
-            ,array("label" => false, "by_reference" => false )
+            ,array("label" => false, "by_reference" => false , 'required'=>false)
             );
     }
 
