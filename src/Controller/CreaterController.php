@@ -94,11 +94,5 @@ class CreaterController extends Controller
     {
         return $this->render("create/CreateQuiz.html.twig");
     }
-    /**
-     * @Route("/ajax")
-     */
-    public function ajaxgrid(Request $request)
-    {
-        return new $this->json("123");
-    }
+
 }

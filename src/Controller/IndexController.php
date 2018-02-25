@@ -78,8 +78,55 @@ class IndexController extends Controller
     public function kek(Request $request):void
     {
         $em= $this->getDoctrine()->getManager();
-        $users = $em->getRepository(User::class)->sortQuery(1,'kek',0,"ASC");
+        $users = $em->getRepository(User::class)->sortQuery(-1,'1',0);
         var_dump($users);
         return;
     }
+
+    /**
+     * @Route("/ajax")
+     */
+    public function answerOnQuestion(Request $request)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository(User::class);
+        $user = ["id","email","username"];
+
+        $userJSON = [];
+        $userJSON[] = $user;
+        $array = $request->request->get("arrayOfData");
+
+        $array[0] = (int) $array[0];
+        $array[1] = (int) $array[1] + $array[2];
+        $array[2] = (int) $array[2];
+        $array[3] = (int) $array[3];
+
+        $users = $repository->sortQuery(abs($array[0]),$array[4],$array[1]);
+        $array[3] = count($users);
+
+        $userJSON[] = $array;
+        //TODO write findByArray (array , $user[0])
+        foreach ($users as $us) {
+            $user  = [];
+            $user[] = $this->json($us->getId());
+            $user[] = $this->json($us->getEmail());
+            $user[] = $this->json($us->getUsername());
+            $userJSON[] = $user;
+        }
+          return $this->json($userJSON);
+    }
+
+    /**
+     * @Route("/ajax1")
+     */
+    public function a1nswerOnQuestion(Request $request)
+    {
+        return $this->render("create/ajaxTry.html.twig");
+    }
+
+
+
+
+
 }
