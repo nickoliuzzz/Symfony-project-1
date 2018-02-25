@@ -27,5 +27,34 @@ class QuizRepository extends ServiceEntityRepository
     {
         return count($this->findAll());
     }
+    public function sortQuery($sortType,$value,$pageNumber, $order="ASC"):array
+    {
+        $qb = $this->createQueryBuilder('q');
+        switch ($sortType)
+        {//DESC ASC
+            case 1:{
+                $qb
+                    ->where('q.name LIKE :value OR q.id LIKE :value ')
+                    ->setParameter('value', $value.'%')
+                    ->orderBy('q.id', $order);
+                break;
+            }
+            case 2:{
+                $qb
+                    ->where('q.name LIKE :value OR q.id LIKE :value ')
+                    ->setParameter('value', $value.'%')
+                    ->orderBy('q.name', $order);
+                break;
+            }
+            default:{
+                break;
+            }
+        }
+        return $qb
+            ->setMaxResults(5)
+            ->setFirstResult($pageNumber*5)
+            ->getQuery()
+            ->getResult();
+    }
 
 }

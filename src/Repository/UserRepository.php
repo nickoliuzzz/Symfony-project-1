@@ -5,7 +5,6 @@ namespace App\Repository;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
-use Doctrine\ORM\Query\Expr\Comparison as KEK;
 
 class UserRepository extends ServiceEntityRepository
 {
@@ -15,20 +14,16 @@ class UserRepository extends ServiceEntityRepository
     }
 
 
-    /**
-     * @KEK\
-     */
     public function sortQuery($sortType,$value,$pageNumber):array
     {
         $order = null;
-        $sortType = abs($sortType);
         if($sortType > 0){
             $order = 'ASC';
         }
         else {
             $order = 'DESC';
         }
-
+        $sortType = abs($sortType);
         $qb = $this->createQueryBuilder('q');
         if('' != trim($value)) {
             $qb
@@ -39,9 +34,7 @@ class UserRepository extends ServiceEntityRepository
                    $qb->setParameter( 'number' , (int)$value  );
                }
                else $qb->setParameter( 'number' ,  -1 );
-
         }
-
         switch ($sortType)
         {//DESC ASC
             case 1:{

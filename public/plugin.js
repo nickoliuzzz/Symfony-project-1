@@ -9,6 +9,8 @@ var goToPage = 0;
 var checkBoxes = [];
 
 
+
+
 appendData();
 console.log(arrayOfData);
 ajax();
@@ -47,16 +49,11 @@ function ajax() {
 
 
            // data.shift();
-            var left = $("<button id='keks'>Left</button>\n");
-            var searched = $("<input type='text' name='searched' id='searched'>");
-            var right = $("<button id='keks1'>Right</button>\n");
-                   table.append( searched);
-            if(temppage > 0) {
-                table.append(left);
-            }
-            if(temppage < maxPage) {
-                table.append(right);
-            }
+            var left = $("<button id='keks' class='btn'>Prev</button>\n");
+            var searched = $("<input type='text' name='searched' id='searched' class='form-control col-sm' style='width:25%'>");
+
+            var right = $("<button id='keks1' class='btn'>Next</button>\n");
+            table.append( searched);
 
 
 
@@ -86,13 +83,10 @@ function ajax() {
                 ajax();
             });
 
-            table.append("<table>");
-            table.append("<tr>" );
-
-
+           table.append("<table class='table'>");
+            $("table").append("<thead><tr>" );
 
             for(var cell of data[0]){
-                table.append();
                 $button = $("<td type='button' class='cells'>" + cell + "</td>");
                 $button.on('click', function(e) {
                     goToPage = 0;
@@ -106,42 +100,53 @@ function ajax() {
                     appendData();
                     ajax();
                 });
-                table.append($button);
+                $("tr").append($button);
             }
 
-
-            table.append("</tr>" );
+            $("table").append("<tbody>" );
             data.shift();
 
             data.shift();
 
+            $kek3=1;
             for(var sem of data) {
-                table.append("<tr>" );
+                $("table tbody").append('<tr id="tr'+$kek3+'">');
                 for (var elemen of sem) {
-
                     //  console.log(elemen["content"]);
                     var content = decodeURI(elemen["content"]).replace(/"/g, '');
-                    table.append("<td>" + content + "</dt>" );
+                    $("#tr"+$kek3).append("<td>" + content + "</td>" );
+                    //$("<td>" + content + "</td>").insertAfter("tr").last()
+                    //console.log($("table tbody tr").last());
                 }
+
                 var index = data[data.indexOf(sem)][0]['content'];
                 console.log(index);
                 $checkBox = $("<td>" + "<input type='checkbox' id='ans'/>" + "</td>");
-                table.append($checkBox);
+                $("#tr"+$kek3).append($checkBox);
                 $checkBox.on('click',function () {
                     console.log(checkBox.index(this));
                     console.log(index);
                 });
-
-                table.append("</tr>" );
+                $kek3++;
+                //table.append("</tr></tbody>" );
             }
-            table.append("</table>");
+            //table.append("</table>");
             $('#searched').focus();
+
+
+            if(temppage > 0) {
+                table.append(left);
+            }
+            if(temppage < maxPage) {
+                table.append(right);
+            }
         },
         error: function (response) {
             console.log('aaa');
             console.log(response);
         }
     });
+
 }
 
 function appendData() {
