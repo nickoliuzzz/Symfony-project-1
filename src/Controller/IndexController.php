@@ -78,7 +78,8 @@ class IndexController extends Controller
     public function kek(Request $request):void
     {
         $em= $this->getDoctrine()->getManager();
-        $users = $em->getRepository(User::class);
+        $users = $em->getRepository(User::class)->sortQuery(1,'kek',0,"ASC");
+        var_dump($users);
         return;
     }
 }
