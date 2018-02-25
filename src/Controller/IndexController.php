@@ -105,10 +105,16 @@ class IndexController extends Controller
 
         $users = $repository->sortQuery(abs($array[0]),$array[4],$array[1]);
         $array[3] = (count($repository->findAll()) / 5) -1 ;
-
-
-
         $userJSON[] = $array;
+
+
+        $buttons = [];
+        $buttons[] = ['makeAdmin','lel'];
+        $buttons[] = ['deleteUsers','kek'];
+
+        $userJSON[] = $buttons;
+
+
         foreach ($users as $us) {
             $user  = [];
             $user[] = $this->json($us->getId());

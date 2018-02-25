@@ -7,6 +7,7 @@ var maxPage = -1;
 var stringFromSearched = "";
 var goToPage = 0;
 var checkBoxes = [];
+checkBoxes.push(-1);
 
 
 appendData();
@@ -93,6 +94,7 @@ function ajax() {
                 $checkBox = $( "<input type='checkbox'  class='ans'/>");
            //     $checkBox.val(index);
                 table.append($checkBox);
+                console.log(checkBoxes);
                 if(checkBoxes.indexOf(sem[0]["content"]) != -1)
                 {
                     $checkBox.attr('checked', true);
@@ -126,15 +128,19 @@ function appendData() {
     arrayOfData.push(goToPage);
     arrayOfData.push(maxPage);
     arrayOfData.push(stringFromSearched);
+    arrayOfData.push(checkBoxes);
+   // console.log(arrayOfData);
 }
 
 function takeArray(temp) {
-  //  console.log(temp);
+    console.log(checkBoxes);
     neededInSort =temp[0];
     temppage = temp[1];
     goToPage = temp[2];
     maxPage = temp[3];
     stringFromSearched = temp[4];
+    checkBoxes = temp[5].content;
+    //console.log(temp[5]);
 }
 
 function sortButton(e){
