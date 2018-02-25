@@ -29,33 +29,9 @@ function ajax() {
         dataType:"json",
         async:true,
         success:function (data) {
-
-
-            table.children().remove();
-
-
-            takeArray(data[1]);
-
-            appendData();
-
-
-
-           // data.shift();
             var left = $("<button id='keks'>Left</button>\n");
             var searched = $("<input type='text' name='searched' id='searched'>");
             var right = $("<button id='keks1'>Right</button>\n");
-                   table.append( searched);
-            if(temppage > 0) {
-                table.append(left);
-            }
-            if(temppage < maxPage) {
-                table.append(right);
-            }
-
-
-
-            searched.val(stringFromSearched);
-
 
 
             searched.keyup(function(e){
@@ -65,39 +41,42 @@ function ajax() {
                 appendData();
                 ajax();
             });
-
-
-
             left.click(function(e){
                 goToPage = -1;
                 appendData();
                 ajax();
             });
-
             right.click(function(e){
                 goToPage = 1;
                 appendData();
                 ajax();
             });
 
+
+            table.children().remove();
+            takeArray(data[1]);
+            searched.val(stringFromSearched);
+            table.append(searched);
+
+
+            if(temppage > 0) {
+                table.append(left);
+            }
+            if(temppage < maxPage) {
+                table.append(right);
+            }
+
+
+
+
+
             table.append("<table>");
             table.append("<tr>" );
-
 
             for(var cell of data[0]){
                 table.append();
                 $button = $("<td type='button' class='cells'>" + cell + "</td>");
-                $button.on('click', function(e) {
-                    goToPage = 0;
-                    temppage = 0;
-                    var neededInSort1 = $('.cells').index(this) + 1;
-                    if(neededInSort1 == neededInSort) {
-                        neededInSort = -neededInSort;
-                    }
-                    else neededInSort = neededInSort1;
-                    appendData();
-                    ajax();
-                });
+                $button.on('click', sortButton);
                 table.append($button);
             }
             table.append("</tr>" );
@@ -156,4 +135,16 @@ function takeArray(temp) {
     goToPage = temp[2];
     maxPage = temp[3];
     stringFromSearched = temp[4];
+}
+
+function sortButton(e){
+    goToPage = 0;
+    temppage = 0;
+    var neededInSort1 = $('.cells').index(this) + 1;
+    if(neededInSort1 == neededInSort) {
+        neededInSort = -neededInSort;
+    }
+    else neededInSort = neededInSort1;
+    appendData();
+    ajax();
 }
