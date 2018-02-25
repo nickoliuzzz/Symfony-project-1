@@ -104,7 +104,7 @@ class IndexController extends Controller
         $array[3] = (int) $array[3];
 
         $users = $repository->sortQuery(abs($array[0]),$array[4],$array[1]);
-        $array[3] = count($repository->findAll());
+        $array[3] = (count($repository->findAll()) / 5) -1 ;
 
 
 

@@ -10,7 +10,6 @@ var checkBoxes = [];
 
 
 appendData();
-console.log(arrayOfData);
 ajax();
 
 
@@ -33,11 +32,6 @@ function ajax() {
 
 
             table.children().remove();
-            console.log("start");
-             console.log(data);
-            // console.log(data[0]);
-            // console.log(data[1]);
-            // console.log(data[2]);
 
 
             takeArray(data[1]);
@@ -90,14 +84,12 @@ function ajax() {
             table.append("<tr>" );
 
 
-
             for(var cell of data[0]){
                 table.append();
                 $button = $("<td type='button' class='cells'>" + cell + "</td>");
                 $button.on('click', function(e) {
                     goToPage = 0;
                     temppage = 0;
-                    console.log($('.cells').index(this));
                     var neededInSort1 = $('.cells').index(this) + 1;
                     if(neededInSort1 == neededInSort) {
                         neededInSort = -neededInSort;
@@ -108,38 +100,42 @@ function ajax() {
                 });
                 table.append($button);
             }
-
-
             table.append("</tr>" );
             data.shift();
-
             data.shift();
-
             for(var sem of data) {
                 table.append("<tr>" );
-                for (var elemen of sem) {
 
-                    //  console.log(elemen["content"]);
+                for (var elemen of sem) {
                     var content = decodeURI(elemen["content"]).replace(/"/g, '');
                     table.append("<td>" + content + "</dt>" );
                 }
                 var index = data[data.indexOf(sem)][0]['content'];
-                console.log(index);
-                $checkBox = $("<td>" + "<input type='checkbox' id='ans'/>" + "</td>");
+                $checkBox = $( "<input type='checkbox'  class='ans'/>");
+           //     $checkBox.val(index);
                 table.append($checkBox);
+                if(checkBoxes.indexOf(sem[0]["content"]) != -1)
+                {
+                    $checkBox.attr('checked', true);
+                }
                 $checkBox.on('click',function () {
-                    console.log(checkBox.index(this));
-                    console.log(index);
+                    var indexOfCheckbox = data[$('.ans').index(this)][0]["content"];
+                    if(checkBoxes.indexOf(indexOfCheckbox) == -1)
+                    {
+                         checkBoxes.push(indexOfCheckbox);
+                    }
+                    else {
+                        checkBoxes.splice(checkBoxes.indexOf(indexOfCheckbox), 1);
+                    }
                 });
 
                 table.append("</tr>" );
             }
             table.append("</table>");
             $('#searched').focus();
+
         },
         error: function (response) {
-            console.log('aaa');
-            console.log(response);
         }
     });
 }
@@ -154,7 +150,7 @@ function appendData() {
 }
 
 function takeArray(temp) {
-    console.log(temp);
+  //  console.log(temp);
     neededInSort =temp[0];
     temppage = temp[1];
     goToPage = temp[2];
