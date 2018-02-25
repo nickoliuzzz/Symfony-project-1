@@ -17,7 +17,9 @@ class AnswerType extends AbstractType
     {
         $builder
             ->add('text', TextType::class,array('label' => ' '))
-            ->add('isTrue', RadioType::class);
+            ->add('isTrue', RadioType::class
+            ,array("label" => false, "by_reference" => false )
+            );
     }
 
     public function configureOptions(OptionsResolver $resolver)

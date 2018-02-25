@@ -12,6 +12,7 @@ Encore
 
     // uncomment to define the assets of the project
     .addEntry('addquiz', './assets/js/addquiz.js')
+    .addEntry('plugin', './assets/js/plugin.js')
     .addEntry('auth_js', './assets/js/auth_script.js')
     .addStyleEntry('addquizstyle', './assets/css/addquiz.css')
     .addStyleEntry('auth_style', './assets/css/auth_form.css')

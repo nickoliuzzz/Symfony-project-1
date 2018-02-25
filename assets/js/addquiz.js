@@ -5,13 +5,13 @@ var $collectionHolder;
 // setup an "add a answer" link
 var $addAnswerLink = $('<a href="#" class="add_answer_link" style="color:#5eff44;" >➕</a>');
 
-var $newLinkLi = $('<li class="list-group-item">Вопрос</li>').append($addAnswerLink);
+var $newLinkLi = $('<li class="list-group-item"></li>').append($addAnswerLink);
 
 
 jQuery(document).ready(function() {
     // Get the ul that holds the collection of answers
     $collectionHolder = $('ul.answers');
-
+    console.log($collectionHolder);
     $collectionHolder.append($newLinkLi);
 
 
@@ -56,8 +56,6 @@ function addAnswerForm($collectionHolder, $newLinkLi) {
     // get the new index
     // var index = $collectionHolder.size();
     var index = $collectionHolder.data('index');
-    console.log($collectionHolder.find(':input').length);
-
     if($collectionHolder.find(':input').length < 12) {
         //   window.alert(index);
         var newForm = prototype;

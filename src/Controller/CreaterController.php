@@ -32,7 +32,6 @@ class CreaterController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($question);
 
-            $question->setIsActive(true);
             foreach ($question->getAnswers() as $answer)
             {
                 $em->persist($answer);
@@ -95,11 +94,5 @@ class CreaterController extends Controller
     {
         return $this->render("create/CreateQuiz.html.twig");
     }
-    /**
-     * @Route("/ajax")
-     */
-    public function ajaxgrid(Request $request)
-    {
-        return new $this->json("123");
-    }
+
 }

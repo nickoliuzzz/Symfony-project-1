@@ -18,31 +18,44 @@ class UserRepository extends ServiceEntityRepository
     /**
      * @KEK\
      */
-    public function sortQuery($sortType,$value,$pageNumber, $order="ASC"):array
+    public function sortQuery($sortType,$value,$pageNumber):array
     {
+        $order = null;
+        $sortType = abs($sortType);
+        if($sortType > 0){
+            $order = 'ASC';
+        }
+        else {
+            $order = 'DESC';
+        }
+
         $qb = $this->createQueryBuilder('q');
+        if('' != trim($value)) {
+            $qb
+                ->where('q.email LIKE :value OR q.username LIKE :value OR q.id = :number ');
+               $qb ->setParameter('value' , '%'.$value.'%');
+               if(is_numeric($value))
+               {
+                   $qb->setParameter( 'number' , (int)$value  );
+               }
+               else $qb->setParameter( 'number' ,  -1 );
+
+        }
+
         switch ($sortType)
         {//DESC ASC
             case 1:{
                 $qb
-                    ->where('q.email LIKE :value OR q.username LIKE :value ')
-                    ->setParameter('value', $value.'%')
                     ->orderBy('q.id', $order);
                 break;
             }
             case 2:{
                 $qb
-                    //->where('q.id = :value')->setParameter('value', $value)
-                    ->where('q.email LIKE :value OR q.username LIKE :value ')
-                    ->setParameter('value', $value.'%')
                     ->orderBy('q.email', $order);
                 break;
             }
             case 3:{
                 $qb
-                    //->where('q.id = :value')->setParameter('value', $value)
-                    ->where('q.email LIKE :value OR q.username LIKE :value ')
-                    ->setParameter('value', $value.'%')
                     ->orderBy('q.username', $order);
                 break;
             }
