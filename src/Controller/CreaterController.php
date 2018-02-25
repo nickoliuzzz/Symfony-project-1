@@ -52,22 +52,21 @@ class CreaterController extends Controller
 
     }
 
-    /**
-     * @Route("/show/{id}",
-     *     defaults={"id" : 1},
-     *     )
-     */
+//    /**
+//     * @Route("/show/{id}",
+//     *     defaults={"id" : 1},
+//     *     )
+//     */
+//    public function showing(Request $request, $id)
+//    {
+//        $em = $this->getDoctrine()->getManager();
+//        $question = $em->getRepository(Question::class);
+//        return $this->render('create/CreateQuiz.html.twig',
+//            array ('questions'=> $question->findAll())
+//        );
+//
+//    }
 
-    //requirements={"id" : "\d+"}
-    public function showing(Request $request, $id)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $question = $em->getRepository(Question::class);
-        return $this->render('create/CreateQuiz.html.twig',
-            array ('questions'=> $question->findAll())
-        );
-
-    }
     /**
      * @Route("/addquestions",
      *     )
@@ -78,18 +77,29 @@ class CreaterController extends Controller
         $quiz = new Quiz();
         $em = $this->getDoctrine()->getManager();
         $questionManager = $em->getRepository(Question::class);
+        $quiz->setName($request->query->get("name"));
         foreach ($request->query->get( "id") as $id){
 
             $quiz->addQuestion($questionManager->find($id));
+
         }
         $em->persist($quiz);
         $em->flush();
         return $this->redirect('/show');
     }
 
-
-
-
-
-
+    /**
+     * @Route("/show")
+     */
+    public function showing(Request $request)
+    {
+        return $this->render("create/CreateQuiz.html.twig");
+    }
+    /**
+     * @Route("/ajax")
+     */
+    public function ajaxgrid(Request $request)
+    {
+        return new $this->json("123");
+    }
 }

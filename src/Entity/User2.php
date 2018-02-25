@@ -13,7 +13,7 @@ use App\Entity\AlreadyPlaying;
  * @UniqueEntity(fields="email", message="Email already taken")
  * @UniqueEntity(fields="username", message="Username already taken")
  */
-class User implements UserInterface
+class User2 implements UserInterface
 {
     /**
      * @ORM\Id

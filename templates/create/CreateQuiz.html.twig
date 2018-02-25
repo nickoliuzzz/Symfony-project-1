@@ -1,28 +1,70 @@
 {% extends "base.html.twig" %}
 
-{% block  body %}
-        <form action="/addquestions" method="GET">
-            {% for question in   questions %}
+{#{% block  body %}#}
+    {#<form action="/addquestions" method="GET">#}
+        {#<label for="usr">Quiz name:</label>#}
+        {#<input type="text" class="form-control" id="usr" name="name" value="">#}
+        {#<br>#}
+        {#<table class="table table-responsive-sm">#}
+            {#<thead>#}
+            {#<tr>#}
+                {#<th>Select</th>#}
+                {#<th>Question</th>#}
+                {#<th>Answer</th>#}
+            {#</tr>#}
+            {#</thead>#}
+            {#<tbody>#}
+            {#{% for question in   questions %}#}
+                {#<tr>#}
+                    {#<td><input type="checkbox" class="subscribeNews" name="id[]" value={{ question.id }}></td>#}
+                    {#<td>{{ question.text }}</td>#}
+                    {#<td>#}
+                        {#{% for answer in   question.answers %}#}
+                            {#{{ answer.text }} |#}
+                        {#{% endfor %}#}
+                    {#</td>#}
+                {#</tr>#}
+            {#{% endfor %}#}
+            {#</tbody>#}
+        {#</table>#}
+        {#<button type="submit" class="btn btn-success" id="create">Create Quiz</button>#}
+        {#<button type="submit" formaction="/createquestion">CreateQuestion</button>#}
+    {#</form>#}
+{#{% endblock %}#}
+{#{% block javascripts %}#}
+    {#<script>#}
+        {#var checkboxes = $('.subscribeNews');#}
+        {#$('#create').click(function () {#}
+            {#var trues = 0;#}
+            {#for(var checkboxe of checkboxes){#}
+                {#if($(checkboxe).prop('checked')){#}
+                    {#trues++;#}
+                {#}#}
+            {#}#}
+            {#var textfield = $('.form-control');#}
+            {#if(textfield.val()!=''){#}
+                {#if(textfield.val().trim()!=''&& trues!=0){#}
+                    {#console.log("kke");#}
+                {#}#}
+            {#}#}
+        {#})#}
+    {#</script>#}
+{#{% endblock %}#}
 
-                <h3>{{ question.text }}</h3>
-                <input type="checkbox" id="subscribeNews" name="id[]" value={{ question.id }}>
-
-
-                {% for answer in   question.answers %}
-
-                    {{ answer.text }}
-
-                {% endfor %}
-
-            {% endfor %}
-            <br>
-            <button type="submit">Add</button>
-            <button type="submit" formaction="/createquestion">CreateQuestion</button>
-
-
-
+{% block body %}
+    <div id=”entities-grid”>
+        <!-- здесь пусто, сюда плагин должен будет вставить таблицу -->
+    </div>
 {% endblock %}
 
-
-
+{% block javascripts %}
+<script>
+    $("#entities-grid").ajaxgrid({
+        dataUrl: "http://symfony.dev/ajax", // URL, с которого тянуть данные
+        sortableColumns: ["id", "title", "created_date"], // массив с именами полей сущности, по которым должна быть возможна сортировка
+    filterableColumns: ["id", "title"], // массив с именами полей сущности, по которым должна быть возможна фильтрация
+    rowsPerPage: 20 // количество строк на страницу для пагинации
+    });
+</script>
+{% endblock %}
 

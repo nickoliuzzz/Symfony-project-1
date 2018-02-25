@@ -1,22 +1,26 @@
 {% extends "base.html.twig" %}
 
-{% block body %}
-    <form action="/user_delete" method="GET">
-        <table class="table table-striped">
+{% block victory %}
+    <form action="{{ path('user_delete') }}" method="get">
+        <table class="table table-striped table-hover">
             <thead>
             <tr>
                 <!--<th>Id</th>-->
+                <th>ID</th>
                 <th>Username</th>
                 <th>Email</th>
-                <th>Delete</th>
+                <th>Role</th>
+                <th>Select</th>
+
             </tr>
             </thead>
             <tbody>
             {% for user in users %}
                 <tr>
-                    <!--<td>{{ user.id }}</td> -->
+                    <td>{{ user.id }}</td>
                     <td>{{ user.username }}</td>
                     <td>{{ user.email }}</td>
+                    <td>{{ user.roles[0] }}</td>
                     <div class="form-check">
                         <td><input class="form-check-input" type="checkbox" name="id[]" value="{{ user.id }}"></td>
                     </div>
@@ -24,8 +28,187 @@
             {% endfor %}
             </tbody>
         </table>
-        <button type="submit" class="btn btn-outline-success">Delete</button>
+        <button type="submit" class="btn btn-outline-success" name="btn_del" id="btn_del">Delete</button>
         <button type="submit" class="btn btn-outline-success">User chlen</button>
 
     </form>
 {% endblock %}
+
+{#{% block body %}#}
+
+    {#<div>#}
+        {#<table class="table table-hover">#}
+            {#<thead>#}
+            {#<tr>#}
+                {#<th>Quiz name</th>#}
+                {#<th>Top users</th>#}
+                {#<th>Current Answers / Count question</th>#}
+            {#</tr>#}
+            {#</thead>#}
+            {#<tbody>#}
+            {#{% for quizes in quiz %}#}
+                {#<tr id="tablerow">#}
+                    {#<td ><a href="/quiz/playing/{{ quizes.getId }}">#}
+
+                                {#{{ quizes.getName }}#}
+
+                        {#</a></td>#}
+                    {#{% if topuser[ loop.index ] == null %}#}
+                        {#<td>Not top user</td>#}
+                        {#<td></td>#}
+                    {#{% else %}#}
+                        {#<td>{{ topuser[ loop.index ][0].getUser.getUsername }} </td>#}
+                        {#<td>{{ topuser[loop.index][0].getNumberOfCorrectAnswers }} / {{ quizes.getQuestions|length }}</td>#}
+                    {#{% endif %}#}
+                {#</tr>#}
+
+            {#{% endfor %}#}
+            {#</tbody>#}
+        {#</table>#}
+    {#</div>#}
+{#{% endblock %}#}
+
+{% block body %}
+    {% set currentUrl = app.request.attributes.get('id') %}
+    {% if currentUrl < 2 %}
+        {% set preUrl = 1 %}
+    {% else%}
+        {% set preUrl = currentUrl-1 %}
+    {% endif %}
+    {% if currentUrl <  countpage//5  %}
+        {% set nextUrl = currentUrl+1 %}
+    {% else%}
+        {% set nextUrl = currentUrl %}
+    {% endif %}
+
+
+    <div>
+        <table class="table table-hover table-responsive-sm">
+            <thead>
+            <tr>
+                <th>Quiz name</th>
+                <th>Top users</th>
+                <th>Current Answers / Count question</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for key, quizes in quiz %}
+                <tr id="tablerow">
+                    <td><a href="/quiz/playing/{{ quizes.getId }}">
+                            {{ quizes.getName }}
+                        </a>
+                    </td>
+                    {% if topuser[ loop.index ] == null %}
+                        <td>
+                            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+                                    data-target="#myModal_default">
+                                View users
+                            </button>
+                            <!-- The Modal -->
+                            <div class="modal fade" id="myModal_default">
+                                <div class="modal-dialog modal-sm modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <!-- Modal Header -->
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">Top Users</h4>
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        </div>
+
+                                        <!-- Modal body -->
+                                        <div class="modal-body">
+                                            Not top users...
+                                        </div>
+
+                                        <!-- Modal footer -->
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        <td></td>
+                    {% else %}
+                        <td>
+                            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+                                    data-target="#myModal[{{ loop.index }}]">
+                                View users
+                            </button>
+                        </td>
+                        <!-- The Modal -->
+                        <div class="modal fade" id="myModal[{{ loop.index }}]">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <!-- Modal Header -->
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Top Users</h4>
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    </div>
+
+                                    <!-- Modal body -->
+                                    <div class="modal-body">
+                                    {% for pos, topusers in topuser[loop.index] %}
+                                     Pos:{{ pos +1}} |
+                                     Name: {{ topusers.getUser.GetUsername }} |
+                                        Answ: {{ topusers.getNumberOfCorrectAnswers }}<br>
+                                    {% endfor %}
+                                    </div>
+                                    <!-- Modal footer -->
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <td>{{ topuser[loop.index][0].getNumberOfCorrectAnswers }}
+                            / {{ quizes.getQuestions|length }}</td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <ul class="pagination">
+        <li class="page-item"><a class="page-link" href="/{{ preUrl }}">Previous</a></li>
+        {#{{ dump(currentUrl) }}#}
+        {#{% if countpage//5//1 < 5 %}#}
+        {#{% for url in 1..countpage//5//1 %}#}
+        {#<li class="page-item"><a class="page-link" href="/{{ url }}">{{ url }}</a></li>#}
+        {#{% endfor %}#}
+        {#{% else %}#}
+        {% if  countpage//5<5 %}
+            {% for url in 1..countpage//5 %}
+                <li class="page-item"><a class="page-link" href="/{{ url }}">{{ url }}</a></li>
+            {% endfor %}
+        {% else %}
+            {% if currentUrl >2 %}
+                <li class="page-item"><a class="page-link" href="/{{ currentUrl-2 }}">{{ currentUrl-2 }}</a></li>
+                <li class="page-item"><a class="page-link" href="/{{ currentUrl-1 }}">{{ currentUrl-1 }}</a></li>
+                <li class="page-item"><a class="page-link" href="/{{ currentUrl }}">{{ currentUrl }}</a></li>
+            {% else %}
+                {% for url in 1..currentUrl %}
+                    <li class="page-item"><a class="page-link" href="/{{ url }}">{{ url }}</a></li>
+                {% endfor %}
+
+            {% endif %}
+            {% if  currentUrl< 3 %}
+                {% for url in  currentUrl+1..5 %}
+                    <li class="page-item"><a class="page-link" href="/{{ url }}">{{ url }}</a></li>
+                {% endfor %}
+            {% elseif currentUrl==countpage//5 %}
+            {% elseif currentUrl+3>countpage//5 %}
+                {% for url in currentUrl+1..countpage//5 %}
+                    <li class="page-item"><a class="page-link" href="/{{ url }}">{{ url }}</a></li>
+                {% endfor %}
+            {% else %}
+                {% for url in  currentUrl+1..currentUrl+2 %}
+                    <li class="page-item"><a class="page-link" href="/{{ url }}">{{ url }}</a></li>
+                {% endfor %}
+            {% endif %}
+        {% endif %}
+        <li class="page-item"><a class="page-link" href="/{{ nextUrl }}">Next</a></li>
+    </ul>
+
+{% endblock %}
+

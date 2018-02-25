@@ -3,7 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Answer;
+use App\Entity\Quiz;
+use App\Entity\Score;
 use App\Entity\User;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -13,14 +17,44 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class IndexController extends Controller
 {
     /**
-     * @Route("/",name="homepage")
+     * @Route("/{id}",name="homepage", requirements={"id"="\d+"})
+     *
      */
-    public function IndexPage(Request $request)
+    public function IndexPage(Request $request,$id=1)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $count = $em->getRepository(Quiz::class)->getNumberofQuiz();
+        if($id<1)
+        {
+            return $this->redirect("/1");
+        }
+        else{
+            if($count/5<$id)
+            {
+                return $this->redirect("/".$count/5);
+            }
+        }
+        $users = $em->getRepository(User::class);
+        $quizzes = $em->getRepository(Quiz::class)->findBySomething(($id-1)*5);
+        $cortage[] = null;
+        foreach ($quizzes as $quiz) {
+            $cortage[] = $em->getRepository(Score::class)->findByQuiz($quiz);
+        }
+        return $this->render("index.html.twig",array('users'=>$users->findAll(),
+            'quiz'=>$quizzes,
+            'topuser'=>$cortage,
+            'countpage'=>$count,
+            ));
+    }
+    /**
+     * @Route("/profile",name="profile")
+     *
+     */
+    public function proflePage(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $users = $em->getRepository(User::class);
-        return $this->render("index.html.twig",array('users'=>$users->findAll()));
-        $em;
+        return $this->render("Profile/ProfilePage.html.twig",array('users'=>$users->findAll()));
     }
     /**
      * @Route("/login",name="login")
@@ -38,5 +72,13 @@ class IndexController extends Controller
             'error'         => $error,
         ));
     }
-
+    /**
+     * @Route("/kek",name="kek")
+     */
+    public function kek(Request $request):void
+    {
+        $em= $this->getDoctrine()->getManager();
+        $users = $em->getRepository(User::class);
+        return;
+    }
 }

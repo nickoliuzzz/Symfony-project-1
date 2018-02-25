@@ -122,19 +122,25 @@ class SecurityController extends Controller
 
             $em = $this->getDoctrine()->getManager();
             $user = $em->getRepository(User::class)->findOneBy(['email' => $email]);
-
+            if($user==null)
+            {
+                return $this->render('security/forgot.html.twig',array('error'=>'not email'));
+            }
+            else{
+                if($user->getRoles()==array('IS_AUTHENTICATED_ANONYMOUSLY') )
+                {
+                    return $this->render('security/forgot.html.twig',array('error'=>'not email'));
+                }
+            }
             $verification = new VerificationEmail();
-
             $verification->setUser($user);
             $verification->setVerificationString($verificatedSting);
             $verification->setForgot(true);
-
             $em->persist($verification);
             $em->flush();
-
             $this->sendEmail($verificatedSting, $user, $mailer, 'forgot');
         }
-        return $this->render('security/forgot.html.twig');
+        return $this->render('security/forgot.html.twig',array('error'=>'ok'));
     }
 
     /**

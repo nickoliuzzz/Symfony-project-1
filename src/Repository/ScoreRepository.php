@@ -40,5 +40,13 @@ class ScoreRepository extends ServiceEntityRepository
         else return false;
 
     }
-
+    public function getTopUser(Quiz $quiz, int $numberUser)
+    {
+        return $this->createQueryBuilder('s')
+            ->where("s.quiz =: value")->setParameter('value', $quiz)
+            ->orderBy("s.numberOfCorrectAnswers","DESC")
+            ->setMaxResults($numberUser)
+            ->getQuery()
+            ->getResult();
+    }
 }

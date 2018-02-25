@@ -60,7 +60,7 @@ class AlreadyPlaying
 
     /**
      * One AlreadyPlaying has One Quiz.
-     * @ORM\OneToOne(targetEntity="App\Entity\Quiz")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Quiz")
      * @ORM\JoinColumn(name="quiz_id", referencedColumnName="id")
      */
     protected $quiz;
