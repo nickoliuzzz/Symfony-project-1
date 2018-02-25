@@ -6,7 +6,7 @@ var temppage = 0;
 var maxPage = -1;
 var stringFromSearched = "";
 var goToPage = 0;
-
+var checkBoxes = [];
 
 
 appendData();
@@ -50,14 +50,19 @@ function ajax() {
             var left = $("<button id='keks'>Left</button>\n");
             var searched = $("<input type='text' name='searched' id='searched'>");
             var right = $("<button id='keks1'>Right</button>\n");
-            table.append( searched);
+                   table.append( searched);
             if(temppage > 0) {
                 table.append(left);
             }
             if(temppage < maxPage) {
                 table.append(right);
             }
+
+
+
             searched.val(stringFromSearched);
+
+
 
             searched.keyup(function(e){
                 goToPage = 0;
@@ -66,6 +71,9 @@ function ajax() {
                 appendData();
                 ajax();
             });
+
+
+
             left.click(function(e){
                 goToPage = -1;
                 appendData();
@@ -115,6 +123,15 @@ function ajax() {
                     var content = decodeURI(elemen["content"]).replace(/"/g, '');
                     table.append("<td>" + content + "</dt>" );
                 }
+                var index = data[data.indexOf(sem)][0]['content'];
+                console.log(index);
+                $checkBox = $("<td>" + "<input type='checkbox' id='ans'/>" + "</td>");
+                table.append($checkBox);
+                $checkBox.on('click',function () {
+                    console.log(checkBox.index(this));
+                    console.log(index);
+                });
+
                 table.append("</tr>" );
             }
             table.append("</table>");

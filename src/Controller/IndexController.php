@@ -92,9 +92,10 @@ class IndexController extends Controller
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository(User::class);
         $user = ["id","email","username"];
-
         $userJSON = [];
         $userJSON[] = $user;
+
+
         $array = $request->request->get("arrayOfData");
 
         $array[0] = (int) $array[0];
@@ -103,10 +104,11 @@ class IndexController extends Controller
         $array[3] = (int) $array[3];
 
         $users = $repository->sortQuery(abs($array[0]),$array[4],$array[1]);
-        $array[3] = count($users);
+        $array[3] = count($repository->findAll());
+
+
 
         $userJSON[] = $array;
-        //TODO write findByArray (array , $user[0])
         foreach ($users as $us) {
             $user  = [];
             $user[] = $this->json($us->getId());

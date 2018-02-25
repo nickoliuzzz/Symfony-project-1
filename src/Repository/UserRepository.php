@@ -64,8 +64,8 @@ class UserRepository extends ServiceEntityRepository
                 }
         }
         return $qb
-            ->setMaxResults(2)
-            ->setFirstResult($pageNumber*2)
+            ->setMaxResults(5)
+            ->setFirstResult($pageNumber*5)
             ->getQuery()
             ->getResult();
     }
