@@ -56,10 +56,11 @@ function addAnswerForm($collectionHolder, $newLinkLi) {
     // Get the data-prototype explained earlier
     var prototype = $collectionHolder.data('prototype');
     prototype.class="form-control col-sm";
-    console.log(prototype);
+  //  console.log(prototype);
     // get the new index
     // var index = $collectionHolder.size();
     var index = $collectionHolder.data('index');
+
     console.log($collectionHolder.find(':input').length);
 
     if($collectionHolder.find(':input').length < 12) {
@@ -81,6 +82,7 @@ function addAnswerForm($collectionHolder, $newLinkLi) {
         var $newFormLi = $('<li class="list-group-item"></li>').append(newForm);
         $newLinkLi.before($newFormLi);
         var Checkboxes = $('.form-check-input');
+        console.log(Checkboxes);
         //var indexOfCheckbox = $('.form-check-input').index(this);
         $(".form-check-input").on('click',function () {
             for(var cell  of Checkboxes){

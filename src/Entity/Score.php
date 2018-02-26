@@ -10,6 +10,11 @@ use Doctrine\ORM\Mapping as ORM;
 class Score
 {
 
+    public function __construct()
+    {
+        $this->user = new User();
+    }
+
 
     /**
      * @ORM\Id
@@ -79,6 +84,10 @@ class Score
     {
         $this->user = $user;
     }
+
+
+
+
 
 
     /**

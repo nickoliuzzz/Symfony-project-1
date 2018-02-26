@@ -1,7 +1,7 @@
 var arrayOfData = [];
 var table = $('#here_table');
 var kek =1;
-var neededInSort =  Number(-1);
+var neededInSort =  0;
 var temppage = 0;
 var maxPage = -1;
 var stringFromSearched = "";
@@ -9,10 +9,10 @@ var goToPage = 0;
 var checkBoxes = [];
 var parametr = 0;
 checkBoxes.push(-1);
-
+var path = $('#thePath').val();
 
 appendData();
-console.log(arrayOfData);
+console.log(path);
 ajax();
 
 
@@ -26,7 +26,7 @@ ajax();
 
 function ajax() {
     $.ajax({
-        url:"/ajax",
+        url:"/" + path,
         method:"POST",
         data:{"arrayOfData":arrayOfData},
         dataType:"json",
@@ -37,9 +37,6 @@ function ajax() {
             table.children().remove();
              console.log(data);
              var parametres = data[2];
-             console.log(parametres);
-
-
             takeArray(data[1]);
             appendData();
             var left = $("<button id='keks' class='btn'>Prev</button>\n");
@@ -134,28 +131,21 @@ function ajax() {
             }
 
             for(var functions of parametres){
-                table.append();
-                $button = $("<input type='button' class='buttons'>" + functions[0] + "</input>");
-                console.log(functions[0]);
-                table.append($button);
-                $button.on('click', function () {
+                var button = $("<input type='button' class='buttons' value='" + functions[0] + "'>");
+                table.append(button);
+                button.on('click', function () {
                     parametr = $('.buttons').index(this) + 1;
                     neededInSort = 0;
                     temppage = 0;
                     goToPage=0;
                     maxPage = 0;
-
                     stringFromSearched = "";
-                    console.log(parametr);
                     appendData();
-
-                    console.log(arrayOfData);
                     ajax();
                 });
 
                 $button.mouseover(function () {
                     parametr = $('.buttons').index(this);
-                    console.log(parametr);
 
                 });
                 $("thead tr").append($button);
@@ -167,6 +157,9 @@ function ajax() {
 
         },
         error: function (response) {
+         if(parametr == 2)
+             window.location = '/createquestion';
+         else window.location = '/';
         }
     });
 }

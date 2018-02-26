@@ -40,7 +40,7 @@ class CreaterController extends Controller
 
 
             $em->flush();
-            return $this->redirect('/show');
+            return $this->redirect('/ajax1/questions');
         }
 
         return $this->render(
@@ -63,7 +63,6 @@ class CreaterController extends Controller
         return $this->render('create/CreateQuiz.html.twig',
             array ('questions'=> $question->findAll())
         );
-
     }
 
     /**
@@ -84,7 +83,7 @@ class CreaterController extends Controller
         }
         $em->persist($quiz);
         $em->flush();
-        return $this->redirect('/show');
+        return $this->redirect('/ajax1/questions');
     }
 
 
