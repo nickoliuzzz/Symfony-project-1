@@ -1,0 +1,14 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    <div class="alert alert-success" align="center">
+        <strong>{{ name }}!</strong><br>
+        You complete Quiz!<br>
+        You score:{{ scorePoints }}<br>
+        You position:{{ numberInArray }}.
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('contentCenter.css') }}>
+{% endblock %}

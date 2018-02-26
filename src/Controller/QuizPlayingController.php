@@ -140,7 +140,7 @@ class QuizPlayingController extends Controller
 
         if ($quiz === Null) {
             //TODO return page that said that someone go to quiz that isn't exist
-            return new Response("ke5432k");
+            return $this->render("bundles/TwigBundle/Exception/error404.html.twig");
         }
 
         if ($quiz->getisActive() === false) {
@@ -171,8 +171,13 @@ class QuizPlayingController extends Controller
             //TODO page that will show ur result
             $name = $activeUser->getUsername();
             $scorePoints = $score->getNumberOfCorrectAnswers();
-            return new Response("Sore, $name, u r already play this quiz.
-                                <br> Ur score is $scorePoints and u r $numberInArray in this quiz.");
+//            return new Response("Sore, $name, u r already play this quiz.
+//                                <br> Ur score is $scorePoints and u r $numberInArray in this quiz.");
+            return $this->render("quiz/QuizComplete.html.twig",array('name'=>$name,
+                'scorePoints'=>$scorePoints,
+                'numberInArray'=>$numberInArray,
+
+                ));
         }
         return null;
     }

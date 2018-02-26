@@ -111,8 +111,9 @@ function ajax() {
                 }
                 var index = data[data.indexOf(sem)][0]['content'];
                 console.log(index);
-                $checkBox = $("<td>" + "<input type='checkbox' id='ans'/>" + "</td>");
-                $("#tr"+$kek3).append($checkBox);
+                $checkBox = $("<input type='checkbox' class='ans'>");
+                $("#tr"+$kek3).append('<td id="td'+$kek3+'">');
+                $("#tr"+$kek3+" #td"+$kek3).append($checkBox);
                 if(checkBoxes.indexOf(sem[0]["content"]) != -1)
                 {
                     $checkBox.attr('checked', true);

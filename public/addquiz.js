@@ -22,6 +22,7 @@ jQuery(document).ready(function() {
 
 
 
+
     $addAnswerLink.on('click', function(e) {
         // prevent the link from creating a "#" on the URL
         e.preventDefault();
@@ -54,7 +55,8 @@ function addAnswerFormDeleteLink($answerFormLi) {
 function addAnswerForm($collectionHolder, $newLinkLi) {
     // Get the data-prototype explained earlier
     var prototype = $collectionHolder.data('prototype');
-
+    prototype.class="form-control col-sm";
+    console.log(prototype);
     // get the new index
     // var index = $collectionHolder.size();
     var index = $collectionHolder.data('index');
