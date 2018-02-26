@@ -39,7 +39,11 @@ function addAnswerFormDeleteLink($answerFormLi) {
         e.preventDefault();
 
         // remove the li for the tag form
-        $answerFormLi.remove();
+        if($answerFormLi.find(':input')[1].checked==true)
+            alert("You can't delete true answer ");
+        else{
+            $answerFormLi.remove();
+        }
     });
 }
 

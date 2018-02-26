@@ -17,5 +17,9 @@
         </li>
     </ul>
         {% endif %}
+    <div id="here_table" ><input type="hidden" value={{ path }} id='thePath'> </div>
+{% endblock %}
 
+{% block javascripts %}
+    <script src="{{ asset('plugin.js')}}"></script>
 {% endblock %}

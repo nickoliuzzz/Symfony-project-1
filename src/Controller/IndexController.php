@@ -55,9 +55,10 @@ class IndexController extends Controller
      */
     public function proflePage(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
-        $users = $em->getRepository(User::class);
-        return $this->render("Profile/ProfilePage.html.twig",array('users'=>$users->findAll()));
+        return $this->render("/Profile/ProfilePage.html.twig",array(
+            'path'=>'users'
+
+        ));
     }
     /**
      * @Route("/login",name="login")
@@ -97,7 +98,7 @@ class IndexController extends Controller
             $array[3] =0;
             $array[4] = "";
             $array[5] = [-1];
-            $array[6] = (int)$array[6];
+            $array[6] = 0;
         }
         else {
             $array[0] = (int)$array[0];
@@ -145,7 +146,7 @@ class IndexController extends Controller
 
         $array = $request->request->get("arrayOfData");
         if($array[6] != 0){
-        $this->actionWithArrayOfQuiz($array[5],$array[6]);
+        $this->actionWithArrayOfQuiz($array[5],$array[6],$array[4]);
 
             $array[0] = 0;
             $array[1] = 0;
@@ -153,7 +154,7 @@ class IndexController extends Controller
             $array[3] = 0;
             $array[4] = "";
             $array[5] = [-1];
-            $array[6] = (int)$array[6];
+            $array[6] = 0;
         }
         else {
             $array[0] = (int)$array[0];
@@ -175,7 +176,8 @@ class IndexController extends Controller
 
         $buttons = [];
         $buttons[] = ['deleteQuiz',"This users will have admin\'s root"];
-        $buttons[] = ['Create','This users will be deleted for always  '];
+        $buttons[] = ['Create Question','This users will be deleted for always  '];
+        $buttons[] = ['Create QUiz','This users will be deleted for always  '];
 
         $userJSON[] = $buttons;
 
@@ -213,7 +215,7 @@ class IndexController extends Controller
     }
 
 
-private function actionWithArrayOfQuiz(array $Ids,int $action ){
+private function actionWithArrayOfQuiz(array $Ids,int $action , string $string){
     $em = $this->getDoctrine()->getManager();
     $repository = $em->getRepository(Question::class);
     $tempArr = array_slice( $Ids,1);
@@ -247,7 +249,21 @@ private function actionWithArrayOfQuiz(array $Ids,int $action ){
         case 2:
             {
                 var_dump();
+                break;
             }
+        case 3:
+            {
+                $quiz = new Quiz();
+                $em = $this->getDoctrine()->getManager();
+                $questionManager = $em->getRepository(Question::class);
+                $quiz->setName($string);
+                foreach ($tempArr as $id){
+                    $quiz->addQuestion($questionManager->find($id));
+                }
+                $em->persist($quiz);
+                $em->flush();
+           }
+
     }
 }
 
@@ -274,7 +290,7 @@ private function actionWithArrayOfQuiz(array $Ids,int $action ){
                     foreach ($tempArr as $tempIdUser){
                          $user = $repository->find($tempIdUser);
                          if($user != null)
-                             $user->setRoles('a:1:{i:0;s:10:"ROLE_ADMIN');
+                             $user->setRoles(array("ROLE_ADMIN"));
                     }
                     $em->flush();
                 }

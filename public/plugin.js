@@ -102,7 +102,8 @@ function ajax() {
                 }
                 var index = data[data.indexOf(sem)][0]['content'];
                 $checkBox = $("<input type='checkbox' class='ans'>");
-                $("#tr"+$kek3).append($checkBox);
+                $("#tr"+$kek3).append('<td id="td'+$kek3+'">');
+                $("#tr"+$kek3+" #td"+$kek3).append($checkBox);
                 if(checkBoxes.indexOf(sem[0]["content"]) != -1)
                 {
                     $checkBox.attr('checked', true);
@@ -131,7 +132,7 @@ function ajax() {
             }
 
             for(var functions of parametres){
-                var button = $("<input type='button' class='buttons' value='" + functions[0] + "'>");
+                var button = $("<input type='button' class='buttons btn btn-primary' value='" + functions[0] + "'>");
                 table.append(button);
                 button.on('click', function () {
                     parametr = $('.buttons').index(this) + 1;
@@ -148,7 +149,7 @@ function ajax() {
                     parametr = $('.buttons').index(this);
 
                 });
-                $("thead tr").append($button);
+                $("thead th").append($button);
             }
 
 
