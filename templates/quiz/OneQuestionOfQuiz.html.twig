@@ -1,24 +1,24 @@
 {% extends "base.html.twig" %}
-{% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('build/addquizstyle.css') }}">
-{% endblock stylesheets %}
+
 
 {% block body %}
-
     <form action="../../quiz/answer" method="POST">
-    <div class="card ">
-        <div class="card-header"><h3>{{ question.text }}</h3></div>
-        <div class="card-body">
+    <h2>{{ question.text }}</h2>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Answer</th>
+        </tr>
+        </thead>
+        <tbody>
             {% for answer in question.answers %}
-                {{ answer.text }}
+                 <tr>
                 <input type="hidden" id="kek" name="idOfQuiz" value={{ app.request.get("id") }}>
-                <input type="radio" id="subscribeNews" name="idOfAnswer" value={{ answer.id }}>
-                <br>
+                <td>{{ answer.text }} | <input type="radio" id="subscribeNews" name="idOfAnswer" value={{ answer.id }}></td>
+                </tr>
             {% endfor %}
-        </div>
-        <div class="card-footer">
-            <button type="submit" class="btn btn-primary">Answer</button>
-        </div>
-    </div>
-    </form>
+        </tbody>
+    </table>
+    <button type="submit" class="btn btn-primary">Answer</button>
+</form>
 {% endblock %}

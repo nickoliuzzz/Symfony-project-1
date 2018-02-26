@@ -62,4 +62,10 @@ class UserRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+    public function deleteUser($id):void
+    {
+        $this->getEntityManager()->remove($this->find($id));
+        $this->getEntityManager()->flush();
+        return;
+    }
 }

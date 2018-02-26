@@ -20,7 +20,7 @@ class ScoreRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('s')
             ->where('s.quiz = :value')->setParameter('value', $quiz)
-            ->orderBy('s.numberOfCorrectAnswers')
+            ->orderBy('s.numberOfCorrectAnswers',"DESC")
             ->setMaxResults(10)
             ->getQuery()
             ->getResult()
@@ -46,6 +46,15 @@ class ScoreRepository extends ServiceEntityRepository
             ->where("s.quiz =: value")->setParameter('value', $quiz)
             ->orderBy("s.numberOfCorrectAnswers","DESC")
             ->setMaxResults($numberUser)
+            ->getQuery()
+            ->getResult();
+    }
+    public function getYouPosition(Quiz $quiz, User $user)
+    {
+        return $this->createQueryBuilder('s')
+            ->where("s.quiz =: value")
+            ->setParameter('value', $quiz)
+            ->orderBy("s.numberOfCorrectAnswers","DESC")
             ->getQuery()
             ->getResult();
     }
