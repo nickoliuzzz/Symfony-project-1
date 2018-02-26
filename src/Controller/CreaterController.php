@@ -51,20 +51,20 @@ class CreaterController extends Controller
 
     }
 
-//    /**
-//     * @Route("/show/{id}",
-//     *     defaults={"id" : 1},
-//     *     )
-//     */
-//    public function showing(Request $request, $id)
-//    {
-//        $em = $this->getDoctrine()->getManager();
-//        $question = $em->getRepository(Question::class);
-//        return $this->render('create/CreateQuiz.html.twig',
-//            array ('questions'=> $question->findAll())
-//        );
-//
-//    }
+    /**
+     * @Route("/show/{id}",
+     *     defaults={"id" : 1},
+     *     )
+     */
+    public function showing(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $question = $em->getRepository(Question::class);
+        return $this->render('create/CreateQuiz.html.twig',
+            array ('questions'=> $question->findAll())
+        );
+
+    }
 
     /**
      * @Route("/addquestions",
@@ -87,12 +87,6 @@ class CreaterController extends Controller
         return $this->redirect('/show');
     }
 
-    /**
-     * @Route("/show")
-     */
-    public function showing(Request $request)
-    {
-        return $this->render("create/CreateQuiz.html.twig");
-    }
+
 
 }
