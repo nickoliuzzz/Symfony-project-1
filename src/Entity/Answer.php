@@ -9,6 +9,9 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Answer
 {
+
+
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue

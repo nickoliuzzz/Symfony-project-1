@@ -1,16 +1,18 @@
 var arrayOfData = [];
 var table = $('#here_table');
 var kek =1;
-var neededInSort =  Number(-1);
+var neededInSort =  0;
 var temppage = 0;
 var maxPage = -1;
 var stringFromSearched = "";
 var goToPage = 0;
 var checkBoxes = [];
-
+var parametr = 0;
+checkBoxes.push(-1);
+var path = $('#thePath').val();
 
 appendData();
-console.log(arrayOfData);
+console.log(path);
 ajax();
 
 
@@ -24,7 +26,7 @@ ajax();
 
 function ajax() {
     $.ajax({
-        url:"/ajax",
+        url:"/" + path,
         method:"POST",
         data:{"arrayOfData":arrayOfData},
         dataType:"json",
@@ -33,13 +35,8 @@ function ajax() {
 
 
             table.children().remove();
-            console.log("start");
              console.log(data);
-            // console.log(data[0]);
-            // console.log(data[1]);
-            // console.log(data[2]);
-
-
+             var parametres = data[2];
             takeArray(data[1]);
             appendData();
             var left = $("<button id='keks' class='btn'>Prev</button>\n");
@@ -93,27 +90,19 @@ function ajax() {
             $("thead tr").append("<th>Select</th>");
             $("table").append("<tbody>" );
             data.shift();
-
+            data.shift();
             data.shift();
 
             $kek3=1;
             for(var sem of data) {
-                //table.append("<tr>" );
-
                 $("table tbody").append('<tr id="tr'+$kek3+'">');
                 for (var elemen of sem) {
-
-                    //  console.log(elemen["content"]);
                     var content = decodeURI(elemen["content"]).replace(/"/g, '');
                     $("#tr"+$kek3).append("<td>" + content + "</td>" );
-                    //$("<td>" + content + "</td>").insertAfter("tr").last()
-                    //console.log($("table tbody tr").last());
                 }
                 var index = data[data.indexOf(sem)][0]['content'];
-                console.log(index);
                 $checkBox = $("<input type='checkbox' class='ans'>");
-                $("#tr"+$kek3).append('<td id="td'+$kek3+'">');
-                $("#tr"+$kek3+" #td"+$kek3).append($checkBox);
+                $("#tr"+$kek3).append($checkBox);
                 if(checkBoxes.indexOf(sem[0]["content"]) != -1)
                 {
                     $checkBox.attr('checked', true);
@@ -129,9 +118,7 @@ function ajax() {
                     }
                 });
                 $kek3++;
-                //table.append("</tr></tbody>" );
             }
-            //table.append("</table>");
             $('#searched').focus();
 
 
@@ -142,8 +129,37 @@ function ajax() {
             if(temppage < maxPage) {
                 table.append(right);
             }
+
+            for(var functions of parametres){
+                var button = $("<input type='button' class='buttons' value='" + functions[0] + "'>");
+                table.append(button);
+                button.on('click', function () {
+                    parametr = $('.buttons').index(this) + 1;
+                    neededInSort = 0;
+                    temppage = 0;
+                    goToPage=0;
+                    maxPage = 0;
+                    stringFromSearched = "";
+                    appendData();
+                    ajax();
+                });
+
+                $button.mouseover(function () {
+                    parametr = $('.buttons').index(this);
+
+                });
+                $("thead tr").append($button);
+            }
+
+
+
+
+
         },
         error: function (response) {
+         if(parametr == 2)
+             window.location = '/createquestion';
+         else window.location = '/';
         }
     });
 }
@@ -155,6 +171,9 @@ function appendData() {
     arrayOfData.push(goToPage);
     arrayOfData.push(maxPage);
     arrayOfData.push(stringFromSearched);
+    arrayOfData.push(checkBoxes);
+    arrayOfData.push(parametr);
+    console.log(arrayOfData);
 }
 
 function takeArray(temp) {
@@ -164,6 +183,10 @@ function takeArray(temp) {
     goToPage = temp[2];
     maxPage = temp[3];
     stringFromSearched = temp[4];
+    checkBoxes = temp[5].slice(0);
+    parametr = temp[6];
+    //console.log(temp);
+
 }
 
 function sortButton(e){

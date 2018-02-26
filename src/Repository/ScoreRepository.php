@@ -27,6 +27,17 @@ class ScoreRepository extends ServiceEntityRepository
         ;
     }
 
+
+    public function findByUser(User $user)
+    {
+        return $this->createQueryBuilder('s')
+            ->where('s.user = :value')->setParameter('value', $user)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+
     public function isUserAlreadyPlay(Quiz $quiz, User $user):bool
     {
         $isUser = $this->createQueryBuilder('s')
@@ -58,4 +69,7 @@ class ScoreRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+
+
 }
