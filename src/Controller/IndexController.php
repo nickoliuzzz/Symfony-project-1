@@ -10,6 +10,7 @@ use App\Entity\Score;
 use App\Entity\User;
 use Doctrine\ORM\Mapping\Id;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -79,6 +80,7 @@ class IndexController extends Controller
 
     /**
      * @Route("/users")
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function adminPageWithUsers(Request $request)
     {
@@ -137,6 +139,7 @@ class IndexController extends Controller
 
     /**
      * @Route("/questions")
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function adminPageWithQuestions(Request $request)
     {
@@ -206,11 +209,12 @@ class IndexController extends Controller
 
     /**
      * @Route("/ajax1/{path}")
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function a1nswerOnQuestion(Request $request,string $path="ajax" )
     {
 
-     //   $this->actionWithArrayOfQuiz([-1,54],1);
+      //  $this->actionWithArrayOfQuiz([-1,2,3,4],3,"chlen");
         return $this->render("create/ajaxTry.html.twig", array('path'=>$path));
     }
 
@@ -219,6 +223,7 @@ private function actionWithArrayOfQuiz(array $Ids,int $action , string $string){
     $em = $this->getDoctrine()->getManager();
     $repository = $em->getRepository(Question::class);
     $tempArr = array_slice( $Ids,1);
+    //var_dump($string);
     switch ($action)
     {
         case 1:
@@ -256,6 +261,7 @@ private function actionWithArrayOfQuiz(array $Ids,int $action , string $string){
                 $quiz = new Quiz();
                 $em = $this->getDoctrine()->getManager();
                 $questionManager = $em->getRepository(Question::class);
+                //var_dump($string);
                 $quiz->setName($string);
                 foreach ($tempArr as $id){
                     $quiz->addQuestion($questionManager->find($id));

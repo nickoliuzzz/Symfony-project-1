@@ -71,13 +71,19 @@ class SecurityController extends Controller
 
     /**
      * @Route("/user_edit/{id}", name="user_edit")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_USER')")
      */
     public function editAction(Request $request, UserPasswordEncoderInterface $passwordEncoder, $id)
     {
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository(User::class)->find($id);
         if (!$user) {
+            throw $this->createNotFoundException(
+                'No product found for id ' . $id
+            );
+        }
+        if($user!=$this->get('security.token_storage')->getToken()->getUser())
+        {
             throw $this->createNotFoundException(
                 'No product found for id ' . $id
             );

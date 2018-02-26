@@ -7,16 +7,17 @@
     {% elseif (app.user.getRoles[0] == 'ROLE_ADMIN') %}
     <ul class="nav nav-tabs nav-justified">
         <li class="nav-item">
-            <a class="nav-link" href="/show">Create Quiz</a>
+            <a class="nav-link" href="/ajax1/questions">Create Quiz</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="/createquestion">Create Question</a>
         </li>
+    {% endif %}
         <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
+            <a class="nav-link" href="{{ path('user_edit', { 'id': app.user.getId }) }}">User edit</a>
         </li>
     </ul>
-        {% endif %}
+
     <div id="here_table" ><input type="hidden" value={{ path }} id='thePath'> </div>
 {% endblock %}
 

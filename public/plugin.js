@@ -140,7 +140,7 @@ function ajax() {
                     temppage = 0;
                     goToPage=0;
                     maxPage = 0;
-                    stringFromSearched = "";
+                  //  stringFromSearched = "";
                     appendData();
                     ajax();
                 });

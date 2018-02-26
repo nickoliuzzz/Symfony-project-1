@@ -6,7 +6,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\JoinTable;
 use Doctrine\ORM\Mapping\ManyToMany;
-use Symfony\Component\HttpKernel\Tests\Controller;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\QuizRepository")
@@ -63,8 +62,8 @@ class Quiz
 
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\AlreadyPlaying", mappedBy="user")
      * One Product has Many Features.
+     * @ORM\OneToMany(targetEntity="App\Entity\Score", mappedBy="quiz")
      */
     protected $scores;
 
@@ -74,7 +73,6 @@ class Quiz
      */
     public function getScores()
     {
-
         return $this->scores;
     }
 
@@ -109,13 +107,12 @@ class Quiz
 
     public function removeScore(Score $score): void
     {
-        $this->getScores()->removeElement($score);
+        $this->scores->remove($score);
     }
 
     public function removeQuestion(Question $question): void
     {
-        $this->getQuestions()->removeElement($question);
-        $question->getQuizzes()->removeElement($this);
+        $this->questions->remove($question);
     }
 
 
