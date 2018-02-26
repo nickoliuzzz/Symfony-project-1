@@ -1,5 +1,8 @@
 {% extends "base.html.twig" %}
 
+{% block title %}
+    Create you Quiz!
+{% endblock %}
 {% block  body %}
     <form action="/addquestions" method="GET">
         <label for="usr">Quiz name:</label>
@@ -31,6 +34,7 @@
         <button type="submit" formaction="/createquestion">CreateQuestion</button>
     </form>
 {% endblock %}
+
 {% block javascripts %}
     <script>
         var checkboxes = $('.subscribeNews');

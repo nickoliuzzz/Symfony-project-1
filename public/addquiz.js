@@ -7,8 +7,6 @@ var $addAnswerLink = $('<button type="button" class="add_answer_link btn btn-suc
 
 var $newLinkLi = $('<li class="list-group-item"></li>').append($addAnswerLink);
 
-
-
 jQuery(document).ready(function() {
     // Get the ul that holds the collection of answers
     $collectionHolder = $('ul.answers');
@@ -19,9 +17,6 @@ jQuery(document).ready(function() {
     // index when inserting a new item (e.g. 2)
     $collectionHolder.data('index', $collectionHolder.find(':input').length);
     $(".form-check-input").attr('checked',true);
-
-
-
 
     $addAnswerLink.on('click', function(e) {
         // prevent the link from creating a "#" on the URL
@@ -94,12 +89,8 @@ function addAnswerForm($collectionHolder, $newLinkLi) {
                    cell.checked=false;
                 }
                 //$('.form-check-input').prop('checked',false);
-
                 //console.log($('.form-check-input').prop('checked',false));
-
             }
-
-
         })
         addAnswerFormDeleteLink($newFormLi);
     }

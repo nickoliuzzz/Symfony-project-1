@@ -1,5 +1,8 @@
 {% extends "base.html.twig" %}
 
+{% block title  %}
+    You play Quiz
+{% endblock %}
 
 {% block body %}
     <form action="../../quiz/answer" method="POST">
@@ -21,4 +24,12 @@
     </table>
     <button type="submit" class="btn btn-primary">Answer</button>
 </form>
+{% endblock %}
+
+{% block javascripts %}
+<script>
+    jQuery(document).ready(function() {
+        $("#subscribeNews").attr('checked',true);
+    });
+</script>
 {% endblock %}

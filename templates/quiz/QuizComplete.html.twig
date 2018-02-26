@@ -1,11 +1,14 @@
 {% extends "base.html.twig" %}
 
+{% block title %}
+    You complete quiz !
+{% endblock %}
 {% block body %}
     <div class="alert alert-success" align="center">
         <strong>{{ name }}!</strong><br>
         You complete Quiz!<br>
-        You score:{{ scorePoints }}<br>
-        You position:{{ numberInArray }}.
+        You score: {{ scorePoints }}<br>
+        You position in rating: {{ numberInArray }}.
     </div>
 {% endblock %}
 

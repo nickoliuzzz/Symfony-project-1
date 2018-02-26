@@ -29,9 +29,9 @@ class IndexController extends Controller
             return $this->redirect("/1");
         }
         else{
-            if($count/5<$id)
+            if(ceil($count/5)<$id)
             {
-                return $this->redirect("/".$count/5);
+                return $this->redirect("/".ceil($count/5));
             }
         }
         $users = $em->getRepository(User::class);
@@ -43,7 +43,7 @@ class IndexController extends Controller
         return $this->render("index.html.twig",array('users'=>$users->findAll(),
             'quiz'=>$quizzes,
             'topuser'=>$cortage,
-            'countpage'=>$count,
+            'countpage'=>ceil($count/5),
             ));
     }
     /**

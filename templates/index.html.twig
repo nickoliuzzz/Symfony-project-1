@@ -75,7 +75,7 @@
     {% else%}
         {% set preUrl = currentUrl-1 %}
     {% endif %}
-    {% if currentUrl <  countpage//5  %}
+    {% if currentUrl <  countpage  %}
         {% set nextUrl = currentUrl+1 %}
     {% else%}
         {% set nextUrl = currentUrl %}
@@ -172,13 +172,13 @@
     <ul class="pagination">
         <li class="page-item"><a class="page-link" href="/{{ preUrl }}">Previous</a></li>
         {#{{ dump(currentUrl) }}#}
-        {#{% if countpage//5//1 < 5 %}#}
-        {#{% for url in 1..countpage//5//1 %}#}
+        {#{% if countpage//1 < 5 %}#}
+        {#{% for url in 1..countpage//1 %}#}
         {#<li class="page-item"><a class="page-link" href="/{{ url }}">{{ url }}</a></li>#}
         {#{% endfor %}#}
         {#{% else %}#}
-        {% if  countpage//5<5 %}
-            {% for url in 1..countpage//5 %}
+        {% if  countpage<5 %}
+            {% for url in 1..countpage %}
                 <li class="page-item"><a class="page-link" href="/{{ url }}">{{ url }}</a></li>
             {% endfor %}
         {% else %}
@@ -196,9 +196,9 @@
                 {% for url in  currentUrl+1..5 %}
                     <li class="page-item"><a class="page-link" href="/{{ url }}">{{ url }}</a></li>
                 {% endfor %}
-            {% elseif currentUrl==countpage//5 %}
-            {% elseif currentUrl+3>countpage//5 %}
-                {% for url in currentUrl+1..countpage//5 %}
+            {% elseif currentUrl==countpage %}
+            {% elseif currentUrl+3>countpage %}
+                {% for url in currentUrl+1..countpage %}
                     <li class="page-item"><a class="page-link" href="/{{ url }}">{{ url }}</a></li>
                 {% endfor %}
             {% else %}
