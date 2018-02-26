@@ -7,6 +7,7 @@ var maxPage = -1;
 var stringFromSearched = "";
 var goToPage = 0;
 var checkBoxes = [];
+var parametr = 0;
 checkBoxes.push(-1);
 
 
@@ -34,11 +35,9 @@ function ajax() {
 
 
             table.children().remove();
-            console.log("start");
              console.log(data);
-            // console.log(data[0]);
-            // console.log(data[1]);
-            // console.log(data[2]);
+             var parametres = data[2];
+             console.log(parametres);
 
 
             takeArray(data[1]);
@@ -94,25 +93,18 @@ function ajax() {
             $("thead tr").append("<th>Select</th>");
             $("table").append("<tbody>" );
             data.shift();
-
+            data.shift();
             data.shift();
 
             $kek3=1;
             for(var sem of data) {
-                //table.append("<tr>" );
-
                 $("table tbody").append('<tr id="tr'+$kek3+'">');
                 for (var elemen of sem) {
-
-                    //  console.log(elemen["content"]);
                     var content = decodeURI(elemen["content"]).replace(/"/g, '');
                     $("#tr"+$kek3).append("<td>" + content + "</td>" );
-                    //$("<td>" + content + "</td>").insertAfter("tr").last()
-                    //console.log($("table tbody tr").last());
                 }
                 var index = data[data.indexOf(sem)][0]['content'];
-                console.log(index);
-                $checkBox = $("<td>" + "<input type='checkbox' id='ans'/>" + "</td>");
+                $checkBox = $("<input type='checkbox' class='ans'>");
                 $("#tr"+$kek3).append($checkBox);
                 if(checkBoxes.indexOf(sem[0]["content"]) != -1)
                 {
@@ -129,9 +121,7 @@ function ajax() {
                     }
                 });
                 $kek3++;
-                //table.append("</tr></tbody>" );
             }
-            //table.append("</table>");
             $('#searched').focus();
 
 
@@ -142,6 +132,39 @@ function ajax() {
             if(temppage < maxPage) {
                 table.append(right);
             }
+
+            for(var functions of parametres){
+                table.append();
+                $button = $("<input type='button' class='buttons'>" + functions[0] + "</input>");
+                console.log(functions[0]);
+                table.append($button);
+                $button.on('click', function () {
+                    parametr = $('.buttons').index(this) + 1;
+                    neededInSort = 0;
+                    temppage = 0;
+                    goToPage=0;
+                    maxPage = 0;
+
+                    stringFromSearched = "";
+                    console.log(parametr);
+                    appendData();
+
+                    console.log(arrayOfData);
+                    ajax();
+                });
+
+                $button.mouseover(function () {
+                    parametr = $('.buttons').index(this);
+                    console.log(parametr);
+
+                });
+                $("thead tr").append($button);
+            }
+
+
+
+
+
         },
         error: function (response) {
         }
@@ -156,7 +179,8 @@ function appendData() {
     arrayOfData.push(maxPage);
     arrayOfData.push(stringFromSearched);
     arrayOfData.push(checkBoxes);
-   // console.log(arrayOfData);
+    arrayOfData.push(parametr);
+    console.log(arrayOfData);
 }
 
 function takeArray(temp) {
@@ -166,8 +190,10 @@ function takeArray(temp) {
     goToPage = temp[2];
     maxPage = temp[3];
     stringFromSearched = temp[4];
-    checkBoxes = temp[5].content;
-    //console.log(temp[5]);
+    checkBoxes = temp[5].slice(0);
+    parametr = temp[6];
+    //console.log(temp);
+
 }
 
 function sortButton(e){

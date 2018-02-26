@@ -93,14 +93,29 @@ class IndexController extends Controller
         $array[2] = (int) $array[2];
         $array[3] = (int) $array[3];
 
+//        switch ($array[6])
+//        {
+//            case 1:
+//                {
+//                    foreach ()
+//
+//                }
+//            case 2:
+//                {
+//                    $tempArr = array_slice( $array[4],1);
+//                    foreach ($tempArr as $temp)
+//                }
+//
+//        }
+
         $users = $repository->sortQuery($array[0],$array[4],$array[1]);
         $array[3] = (count($repository->findAll()) / 5) -1 ;
         $userJSON[] = $array;
 
 
         $buttons = [];
-        $buttons[] = ['makeAdmin','lel'];
-        $buttons[] = ['deleteUsers','kek'];
+        $buttons[] = ['makeAdmin',"This users will have admin\'s root"];
+        $buttons[] = ['deleteUsers','This users will be deleted for always  '];
 
         $userJSON[] = $buttons;
 
