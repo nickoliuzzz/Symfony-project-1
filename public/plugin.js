@@ -160,7 +160,8 @@ function ajax() {
         error: function (response) {
          if(parametr == 2)
              window.location = '/createquestion';
-         else window.location = '/';
+         else
+             window.location = '/';
         }
     });
 }

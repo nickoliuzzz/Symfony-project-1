@@ -18,27 +18,21 @@ class CreaterController extends Controller
     /**
      * @Route("/createquestion/{parametres}",
      *   defaults={"parametres": "0"} )
-     *
-     *
      */
-    public function index(Request $request,int $parametres)
+    public function index(Request $request, int $parametres)
     {
         $question = new Question();
         $form = $this->createForm(QuestionType::class, $question);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $em = $this->getDoctrine()->getManager();
             $em->persist($question);
 
-            foreach ($question->getAnswers() as $answer)
-            {
+            foreach ($question->getAnswers() as $answer) {
                 $em->persist($answer);
                 $answer->setQuestion($question);
             }
-
-
             $em->flush();
             return $this->redirect('/ajax1/questions');
         }
@@ -46,7 +40,7 @@ class CreaterController extends Controller
         return $this->render(
             'create/createrOfQuestion.html.twig',
             array('form' => $form->createView(),
-                )
+            )
         );
 
     }
@@ -61,7 +55,7 @@ class CreaterController extends Controller
         $em = $this->getDoctrine()->getManager();
         $question = $em->getRepository(Question::class);
         return $this->render('create/CreateQuiz.html.twig',
-            array ('questions'=> $question->findAll())
+            array('questions' => $question->findAll())
         );
     }
 
@@ -76,7 +70,7 @@ class CreaterController extends Controller
         $em = $this->getDoctrine()->getManager();
         $questionManager = $em->getRepository(Question::class);
         $quiz->setName($request->query->get("name"));
-        foreach ($request->query->get( "id") as $id){
+        foreach ($request->query->get("id") as $id) {
 
             $quiz->addQuestion($questionManager->find($id));
 
@@ -85,7 +79,6 @@ class CreaterController extends Controller
         $em->flush();
         return $this->redirect('/ajax1/questions');
     }
-
 
 
 }

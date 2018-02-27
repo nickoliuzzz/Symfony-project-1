@@ -14,18 +14,6 @@ class AlreadyPlayingRepository extends ServiceEntityRepository
         parent::__construct($registry, AlreadyPlaying::class);
     }
 
-    /*
-    public function findBySomething($value)
-    {
-        return $this->createQueryBuilder('a')
-            ->where('a.something = :value')->setParameter('value', $value)
-            ->orderBy('a.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
     public function findByUser(User $user)
     {
         return $this->createQueryBuilder('s')

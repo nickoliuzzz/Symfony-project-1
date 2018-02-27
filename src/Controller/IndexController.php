@@ -9,6 +9,7 @@ use App\Entity\Quiz;
 use App\Entity\Score;
 use App\Entity\User;
 use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Tools\Export\ExportException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -219,59 +220,60 @@ class IndexController extends Controller
     }
 
 
-private function actionWithArrayOfQuiz(array $Ids,int $action , string $string){
-    $em = $this->getDoctrine()->getManager();
-    $repository = $em->getRepository(Question::class);
-    $tempArr = array_slice( $Ids,1);
-    //var_dump($string);
-    switch ($action)
-    {
-        case 1:
-            {
-                foreach ($tempArr as $tempIdQuestion){
-                    $question = $repository->find($tempIdQuestion);
-                    foreach($question->getAnswers() as $answer){
-                        $em->remove($answer);
+    private function actionWithArrayOfQuiz(array $Ids,int $action , string $string){
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository(Question::class);
+        $tempArr = array_slice( $Ids,1);
+        //var_dump($string);
+        switch ($action)
+        {
+            case 1:
+                {
+                    foreach ($tempArr as $tempIdQuestion){
+                        $question = $repository->find($tempIdQuestion);
+                        foreach($question->getAnswers() as $answer){
+                            $em->remove($answer);
+                        }
+    //                    foreach ($question->getQuizzes() as $quiz) {
+    //                        if(count($quiz->getQuestions()) == 1)
+    //                        {
+    //
+    //                            $scores = $quiz->getScores();
+    //                            var_dump($scores->slice(0,1));
+    //                            foreach ($scores as $score){
+    //
+    //                                $em->remove($score);
+    //                            }
+    //                            $em->remove($quiz);
+    //                        }
+    //                   }
+                       $em->remove($question);
                     }
-//                    foreach ($question->getQuizzes() as $quiz) {
-//                        if(count($quiz->getQuestions()) == 1)
-//                        {
-//
-//                            $scores = $quiz->getScores();
-//                            var_dump($scores->slice(0,1));
-//                            foreach ($scores as $score){
-//
-//                                $em->remove($score);
-//                            }
-//                            $em->remove($quiz);
-//                        }
-//                   }
-                   $em->remove($question);
+                    $em->flush();
+                    break;
                 }
-                $em->flush();
-                break;
-            }
-        case 2:
-            {
-                var_dump();
-                break;
-            }
-        case 3:
-            {
-                $quiz = new Quiz();
-                $em = $this->getDoctrine()->getManager();
-                $questionManager = $em->getRepository(Question::class);
-                //var_dump($string);
-                $quiz->setName($string);
-                foreach ($tempArr as $id){
-                    $quiz->addQuestion($questionManager->find($id));
+            case 2:
+                {
+                    var_dump();
+                    throw new ExportException();
+                    break;
                 }
-                $em->persist($quiz);
-                $em->flush();
-           }
+            case 3:
+                {
+                    $quiz = new Quiz();
+                    $em = $this->getDoctrine()->getManager();
+                    $questionManager = $em->getRepository(Question::class);
+                    //var_dump($string);
+                    $quiz->setName($string);
+                    foreach ($tempArr as $id){
+                        $quiz->addQuestion($questionManager->find($id));
+                    }
+                    $em->persist($quiz);
+                    $em->flush();
+               }
 
+        }
     }
-}
 
 
     private function actionWithArrayOfUser(array $Ids,int $action ){
@@ -303,8 +305,6 @@ private function actionWithArrayOfQuiz(array $Ids,int $action , string $string){
         }
     }
 
-
-
     public function removeUser(User $user)
     {
         $em = $this->getDoctrine()->getManager();
@@ -323,7 +323,4 @@ private function actionWithArrayOfQuiz(array $Ids,int $action , string $string){
         $em->remove($user);
         $em->flush();
     }
-
-
-
 }

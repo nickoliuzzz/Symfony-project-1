@@ -19,6 +19,30 @@ class AlreadyPlaying
     private $id;
 
     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="alreadyplaings")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    protected $user;
+
+    /**
+     * One AlreadyPlaying has One Quiz.
+     * @ORM\ManyToOne(targetEntity="App\Entity\Quiz")
+     * @ORM\JoinColumn(name="quiz_id", referencedColumnName="id")
+     */
+    protected $quiz;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $numberOfCorrectAnswers = 0;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $numberOfAnswers = 0;
+
+
+    /**
      * @return integer
      */
     public function getId()
@@ -36,12 +60,6 @@ class AlreadyPlaying
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="alreadyplaings")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-     */
-    protected $user;
-
-    /**
      * @return mixed
      */
     public function getUser()
@@ -56,14 +74,6 @@ class AlreadyPlaying
     {
         $this->user = $user;
     }
-
-
-    /**
-     * One AlreadyPlaying has One Quiz.
-     * @ORM\ManyToOne(targetEntity="App\Entity\Quiz")
-     * @ORM\JoinColumn(name="quiz_id", referencedColumnName="id")
-     */
-    protected $quiz;
 
 
     /**
@@ -84,11 +94,6 @@ class AlreadyPlaying
 
 
     /**
-     * @ORM\Column(type="integer")
-     */
-    private $numberOfCorrectAnswers = 0;
-
-    /**
      * @return integer
      */
     public function getNumberOfCorrectAnswers()
@@ -104,11 +109,6 @@ class AlreadyPlaying
         $this->numberOfCorrectAnswers = $numberOfCorrectAnswers;
     }
 
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $numberOfAnswers = 0;
 
     /**
      * @return integer

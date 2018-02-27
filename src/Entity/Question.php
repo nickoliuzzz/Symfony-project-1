@@ -12,10 +12,7 @@ use Doctrine\ORM\Mapping\ManyToMany;
 class Question
 {
 
-    public function __construct() {
-        $this->answers = new ArrayCollection();
-        $this->quizzes = new ArrayCollection();
-    }
+
 
 
 
@@ -28,22 +25,30 @@ class Question
     private $id;
 
     /**
-     * @return mixed
+     * @ORM\Column(type="string")
      */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-
-
-
+    private $text;
 
     /**
      * One Product has Many Features.
      * @ORM\OneToMany(targetEntity="App\Entity\Answer", mappedBy="question")
      */
     protected $answers;
+
+    /**
+     * Many Groups have Many Users.
+     * @ManyToMany(targetEntity="Quiz", mappedBy="questions")
+     */
+    protected $quizzes;
+
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
 
     public function addAnswer(Answer $answer): void
@@ -69,16 +74,6 @@ class Question
     }
 
 
-
-
-
-
-    /**
-     * Many Groups have Many Users.
-     * @ManyToMany(targetEntity="Quiz", mappedBy="questions")
-     */
-    protected $quizzes;
-
     public function addQuiz(Quiz $quiz) : void
     {
         $this->quizzes->add($quiz);
@@ -92,7 +87,6 @@ class Question
         return $this->quizzes;
     }
 
-
     /**
      * @param mixed $quizzes
      */
@@ -102,20 +96,6 @@ class Question
     }
 
 
-
-
-
-
-
-
-
-
-
-    /**
-     * @ORM\Column(type="string")
-     */
-    private $text;
-
     /**
      * @return mixed
      */
@@ -124,15 +104,16 @@ class Question
         return $this->text;
     }
 
-
-
-
-
     /**
      * @param mixed $text
      */
     public function setText($text): void
     {
         $this->text = $text;
+    }
+
+    public function __construct() {
+        $this->answers = new ArrayCollection();
+        $this->quizzes = new ArrayCollection();
     }
 }

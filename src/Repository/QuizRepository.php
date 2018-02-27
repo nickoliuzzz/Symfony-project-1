@@ -28,7 +28,4 @@ class QuizRepository extends ServiceEntityRepository
         return count($this->findAll());
     }
 
-
-
-
 }

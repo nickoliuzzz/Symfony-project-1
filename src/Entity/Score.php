@@ -19,6 +19,27 @@ class Score
     private $id;
 
     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Quiz" , inversedBy="scores")
+     * @ORM\JoinColumn(name="quiz_id", referencedColumnName="id")
+     */
+    private $quiz;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    private $user;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $numberOfCorrectAnswers;
+
+
+
+
+
+    /**
      * @return integer
      */
     public function getId()
@@ -26,20 +47,10 @@ class Score
         return $this->id;
     }
 
-    /**
-     * @param integer $id
-     */
-    public function setId($id): void
-    {
-        $this->id = $id;
-    }
 
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Quiz" , inversedBy="scores")
-     * @ORM\JoinColumn(name="quiz_id", referencedColumnName="id")
-     */
-    private $quiz;
+
+
 
     /**
      * @return mixed
@@ -59,12 +70,6 @@ class Score
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="User")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-     */
-    private $user;
-
-    /**
      * @return mixed
      */
     public function getUser()
@@ -82,11 +87,6 @@ class Score
 
 
     /**
-     * @ORM\Column(type="integer")
-     */
-    private $numberOfCorrectAnswers;
-
-    /**
      * @return integer
      */
     public function getNumberOfCorrectAnswers()
@@ -101,6 +101,4 @@ class Score
     {
         $this->numberOfCorrectAnswers = $numberOfCorrectAnswers;
     }
-
-
 }

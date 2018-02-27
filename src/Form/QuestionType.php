@@ -30,16 +30,6 @@ class QuestionType extends AbstractType
                 'entry_options' =>  array('label' => false),
                 'by_reference' => false,
             ))
-//            ->add('answers', EntityType::class, array(
-//            // looks for choices from this entity
-//            'class' => Answer::class,
-//            'query_builder' => function (EntityRepository $er) {
-//                return $er->createQueryBuilder('u')
-//                    ->orderBy('u.text', 'ASC');
-//            },
-//            // uses the User.username property as the visible option string
-//            'choice_label' => 'text',
-//            ))
             ->add('submit', SubmitType::class, array (
                 'label' => 'Save'
             ))
@@ -49,7 +39,6 @@ class QuestionType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            // uncomment if you want to bind to a class
             'data_class' => Question::class,
         ]);
     }

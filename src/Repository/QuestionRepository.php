@@ -13,18 +13,6 @@ class QuestionRepository extends ServiceEntityRepository
         parent::__construct($registry, Question::class);
     }
 
-    /*
-    public function findBySomething($value)
-    {
-        return $this->createQueryBuilder('q')
-            ->where('q.something = :value')->setParameter('value', $value)
-            ->orderBy('q.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
     public function sortQuery($sortType,$value,$pageNumber):array
     {
         $order = null;

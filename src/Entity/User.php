@@ -23,15 +23,6 @@ class User implements UserInterface
      */
     private $id;
 
-
-    /**
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
     /**
      * @ORM\Column(type="string", length=255, unique=true)
      * @Assert\NotBlank()
@@ -44,6 +35,42 @@ class User implements UserInterface
      */
     private $isActive = array("IS_AUTHENTICATED_ANONYMOUSLY");
 
+    /**
+     * @ORM\Column(type="string", length=255, unique=true)
+     * @Assert\NotBlank()
+     */
+    private $username;
+
+    /**
+     * @Assert\NotBlank()
+     * @Assert\Length(max=4096)
+     */
+    private $plainPassword;
+
+    /**
+     * The below length depends on the "algorithm" you use for encoding
+     * the password, but this works well with bcrypt.
+     *
+     * @ORM\Column(type="string", length=64)
+     */
+    private $password;
+
+    /**
+     * One Product has Many Features.
+     * @ORM\OneToMany(targetEntity="App\Entity\AlreadyPlaying", mappedBy="user")
+     */
+    private $alreadyplaings;
+
+
+    /**
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+
     public function getEmail()
     {
         return $this->email;
@@ -54,11 +81,6 @@ class User implements UserInterface
         $this->email = $email;
     }
 
-    /**
-     * @ORM\Column(type="string", length=255, unique=true)
-     * @Assert\NotBlank()
-     */
-    private $username;
 
     public function getUsername()
     {
@@ -69,12 +91,6 @@ class User implements UserInterface
     {
         $this->username = $username;
     }
-
-    /**
-     * @Assert\NotBlank()
-     * @Assert\Length(max=4096)
-     */
-    private $plainPassword;
 
 
     public function getPlainPassword()
@@ -87,13 +103,6 @@ class User implements UserInterface
         $this->plainPassword = $password;
     }
 
-    /**
-     * The below length depends on the "algorithm" you use for encoding
-     * the password, but this works well with bcrypt.
-     *
-     * @ORM\Column(type="string", length=64)
-     */
-    private $password;
 
     public function getPassword()
     {
@@ -105,12 +114,6 @@ class User implements UserInterface
         $this->password = $password;
     }
 
-    /**
-     * One Product has Many Features.
-     * @ORM\OneToMany(targetEntity="App\Entity\AlreadyPlaying", mappedBy="user")
-     */
-    private $alreadyplaings;
-
 
     /**
      * @return array
@@ -119,7 +122,6 @@ class User implements UserInterface
     {
         return $this->alreadyplaings;
     }
-
 
     /**
      * @param array $alreadyplaings
@@ -131,8 +133,6 @@ class User implements UserInterface
 
     public function addAlreadyplaings($alreadyplaing): void
     {
-        // The bcrypt and argon2i algorithms don't require a separate salt.
-        // You *may* need a real salt if you choose a different encoder.
         return;
     }
 
@@ -141,9 +141,9 @@ class User implements UserInterface
         $this->alreadyplaings->removeElement($alreadyplaing);
     }
 
+
     public function getRoles()
     {
-        // TODO: Implement getRoles() method.
         return $this->isActive;
     }
 
@@ -157,20 +157,12 @@ class User implements UserInterface
 
     public function eraseCredentials()
     {
-        // TODO: Implement eraseCredentials() method.
     }
 
-    // other methods, including security methods like getRoles()
-
     /**
-     * Returns the salt that was originally used to encode the password.
-     *
-     * This can return null if the password was not encoded using a salt.
-     *
      * @return string|null The salt
      */
     public function getSalt()
     {
-        // TODO: Implement getSalt() method.
     }
 }

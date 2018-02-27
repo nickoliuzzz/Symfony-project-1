@@ -22,6 +22,37 @@ class Quiz
     private $id;
 
     /**
+     * @ManyToMany(targetEntity="Question", inversedBy="quizzes")
+     * @JoinTable(name="question_groups")
+     */
+    protected $questions;
+
+    /**
+     * One Product has Many Features.
+     * @ORM\OneToMany(targetEntity="App\Entity\Score", mappedBy="quiz")
+     */
+    protected $scores;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isActive;
+
+    /**
+     * @ORM\Column(type="string", unique=true)
+     */
+    private $name;
+
+
+    public function __construct()
+    {
+        $this->scores = new ArrayCollection();
+        $this->questions = new ArrayCollection();
+        $this->isActive = true;
+    }
+
+
+    /**
      * @return integer
      */
     public function getId()
@@ -29,20 +60,6 @@ class Quiz
         return $this->id;
     }
 
-    /**
-     * @param integer $id
-     */
-    public function setId($id): void
-    {
-        $this->id = $id;
-    }
-
-
-    /**
-     * @ManyToMany(targetEntity="Question", inversedBy="quizzes")
-     * @JoinTable(name="question_groups")
-     */
-    protected $questions;
 
     /**
      * @return mixed
@@ -60,12 +77,16 @@ class Quiz
         $this->questions = $questions;
     }
 
+    public function removeQuestion(Question $question): void
+    {
+        $this->questions->remove($question);
+    }
 
-    /**
-     * One Product has Many Features.
-     * @ORM\OneToMany(targetEntity="App\Entity\Score", mappedBy="quiz")
-     */
-    protected $scores;
+    public function addQuestion(Question $question): void
+    {
+        $this->getQuestions()->add($question);
+        $question->addQuiz($this);
+    }
 
 
     /**
@@ -76,7 +97,6 @@ class Quiz
         return $this->scores;
     }
 
-
     /**
      * @param mixed $scores
      */
@@ -85,41 +105,17 @@ class Quiz
         $this->scores = $scores;
     }
 
-
-    public function __construct()
-    {
-        $this->scores = new ArrayCollection();
-        $this->questions = new ArrayCollection();
-        $this->isActive = true;
-    }
-
     public function addScore(Score $score): void
     {
         $this->getScores()->add($score);
     }
-
-    public function addQuestion(Question $question): void
-    {
-        $this->getQuestions()->add($question);
-        $question->addQuiz($this);
-    }
-
 
     public function removeScore(Score $score): void
     {
         $this->scores->remove($score);
     }
 
-    public function removeQuestion(Question $question): void
-    {
-        $this->questions->remove($question);
-    }
 
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $isActive;
 
     /**
      * @return boolean
@@ -137,10 +133,6 @@ class Quiz
         $this->isActive = $isActive;
     }
 
-    /**
-     * @ORM\Column(type="string", unique=true)
-     */
-    private $name;
 
     /**
      * @return mixed
@@ -157,6 +149,4 @@ class Quiz
     {
         $this->name = $name;
     }
-
-    // add your own fields
 }

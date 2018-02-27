@@ -20,19 +20,29 @@ class Answer
     private $id;
 
     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Question", inversedBy="answers")
+     * @ORM\JoinColumn(name="question_id", referencedColumnName="id")
+     */
+    protected $question;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $text;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isTrue;
+
+
+    /**
      * @return mixed
      */
     public function getId()
     {
         return $this->id;
     }
-
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Question", inversedBy="answers")
-     * @ORM\JoinColumn(name="question_id", referencedColumnName="id")
-     */
-    protected $question;
 
     /**
      * @return mixed
@@ -42,6 +52,7 @@ class Answer
         return $this->question;
     }
 
+
     /**
      * @param mixed $question
      */
@@ -49,13 +60,6 @@ class Answer
     {
         $this->question = $question;
     }
-
-
-    /**
-     * @ORM\Column(type="string")
-     */
-    private $text;
-
 
     /**
      * @return mixed
@@ -72,12 +76,6 @@ class Answer
     {
         $this->text = $text;
     }
-
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $isTrue;
 
     /**
      * @return mixed
